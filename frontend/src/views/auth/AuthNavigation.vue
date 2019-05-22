@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" to="/home">
-        <img src="@/assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="@/assets/isuzu-logo-compressor.png" height="30" class="d-inline-block align-top" alt="">
       </a>
       <button class="navbar-toggler" 
       type="button" data-toggle="collapse" 
