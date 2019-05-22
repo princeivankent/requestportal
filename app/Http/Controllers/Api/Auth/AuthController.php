@@ -11,27 +11,6 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        if (!$request->name || !$request->username || !$request->password) {
-            return response()->json([
-                'message' => '** All fields are required **'
-            ], 422);
-        }
-
-        $user = new OraUser([
-            'name'     => $request->name,
-            'username' => $request->username,
-            'password' => $request->password
-        ]);
-        
-        $user->save();
-
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
-    }
-
     public function login(Request $request, Jwt $jwt, Employee $employee)
     {
         if (!$request->employee_number || !$request->password) {
@@ -41,6 +20,8 @@ class AuthController extends Controller
         }
 
         $query = $employee->get_user($request->employee_number, $request->password);
+
+        // return response()->json($query);
 
         if (!$query) 
             return response()->json([
@@ -62,6 +43,8 @@ class AuthController extends Controller
         // Make strings standardized
         $query->name = ucwords(strtolower($query->name));
         $query->position_title = ucwords(strtolower($query->position_title));
+        $query->department = ucwords(strtolower($query->department));
+        $query->division = ucwords(strtolower($query->division));
         $query->section = ucwords(strtolower($query->section));
 
         return response()->json([
