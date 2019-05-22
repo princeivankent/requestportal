@@ -2,13 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { TokenService } from './services/storage.service'
 
-/**
-  Lazy Loading/Code Splitting/Dynamic Components
- */
-
-// import Login from '@/views/auth/Login'
-// import Main from '@/layouts/Main'
-
 const Main     = () => import(/* webpackChunkName: "main" */ './layouts/Main')
 const Login    = () => import(/* webpackChunkName: "login" */ './views/auth/Login')
 const Register = () => import(/* webpackChunkName: "register" */ './views/auth/Register')
