@@ -56,7 +56,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'user'         => $query,
+            // 'user'         => $query,
             'access_token' => $token->token,
             'expires_at'   => Carbon::parse($token->expires_at)->toDateTimeString()
         ]);

@@ -19,7 +19,7 @@ class CreateApiTokensTable extends Migration
             $table->collation = 'utf8mb4_general_ci';
 
             $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->integer('employee_id');
             $table->text('token');
             $table->boolean('revoked');
             $table->dateTime('expires_at')->nullable();

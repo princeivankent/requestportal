@@ -13,9 +13,6 @@ const Main     = () => import(/* webpackChunkName: "main" */ './layouts/Main')
 const Login    = () => import(/* webpackChunkName: "login" */ './views/auth/Login')
 const Register = () => import(/* webpackChunkName: "register" */ './views/auth/Register')
 const Home     = () => import(/* webpackChunkName: "home" */ './views/Home')
-const About    = () => import(/* webpackChunkName: "about" */ './views/About')
-const Contact  = () => import(/* webpackChunkName: "contact" */ './views/Contact')
-const Profile  = () => import(/* webpackChunkName: "profile" */ './views/Profile')
 
 Vue.use(VueRouter)
 
@@ -32,10 +29,7 @@ const router = new VueRouter({
         requiresAuth: true 
       },
       children: [
-        { path: 'home', component: Home },
-        { path: 'about', component: About },
-        { path: 'contact', component: Contact },
-        { path: 'profile', component: Profile },
+        { path: 'home', component: Home }
       ]
     },
     { 
