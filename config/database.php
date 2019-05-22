@@ -66,6 +66,20 @@ return [
             'engine' => null,
         ],
 
+        'ipc_central' => [
+            'driver' => 'mysql',
+            'host' => env('DB_IPCCENTRAL_HOST'),
+            'port' => env('DB_IPCCENTRAL_PORT'),
+            'database' => env('DB_IPCCENTRAL_DATABASE'),
+            'username' => env('DB_IPCCENTRAL_USERNAME'),
+            'password' => env('DB_IPCCENTRAL_PASSWORD'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'localhost'),
