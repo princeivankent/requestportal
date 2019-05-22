@@ -26,7 +26,7 @@
         </div>
         <div class="form-inline">
           <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-          <h5 class="mr-4 text-white">{{ $store.state.login.user.name }}</h5>
+          <h5 class="mr-4 text-white">{{ $store.getters['login/userDetails'].name }}</h5>
           <button 
           class="btn btn-sm btn-outline-danger my-2 my-sm-0"
           @click="logout"

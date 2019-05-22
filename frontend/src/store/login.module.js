@@ -1,5 +1,6 @@
 import { UserService, AuthenticationError } from '../services/user.service'
 import { TokenService } from '../services/storage.service'
+import JwtService from '../services/jwt.service'
 import router from '../router'
 
 const login = {
@@ -10,7 +11,6 @@ const login = {
     authenticationErrorCode: 0,
     authenticationError: '',
     accessToken: TokenService.getToken(),
-    user: TokenService.getUserInstance()
   },
 
   getters: {
@@ -28,6 +28,10 @@ const login = {
 
     authenticating: (state) => {
       return state.authenticating
+    },
+
+    userDetails: (state) => {
+      return JwtService.decrypt(state.accessToken)
     }
   },
 
@@ -40,7 +44,6 @@ const login = {
 
     loginSuccess (state, response) {
       state.accessToken = response.access_token
-      state.user = response.user
       state.authenticating = false
     },
 
@@ -56,7 +59,6 @@ const login = {
 
     logoutSuccess (state) {
       state.accessToken = ''
-      state.user = ''
     },
 
     // Error hooks

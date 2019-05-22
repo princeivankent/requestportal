@@ -39,7 +39,6 @@ const UserService = {
     try {
       const response = await ApiService.customRequest(requestData)
       
-      TokenService.saveUserInstance(response.data.user)
       TokenService.saveToken(response.data.access_token)
       ApiService.setHeader()
       
@@ -100,7 +99,6 @@ const UserService = {
       const response = await ApiService.customRequest(requestData)
 
       TokenService.removeToken()
-      TokenService.removeUserInstance()
       ApiService.removeHeader()
 
       return response.data

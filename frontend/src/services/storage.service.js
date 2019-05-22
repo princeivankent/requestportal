@@ -19,18 +19,6 @@ const TokenService = {
   removeToken () {
     localStorage.removeItem(TOKEN_KEY)
   },
-
-  getUserInstance () {
-    return JSON.parse(localStorage.getItem(USER))
-  },
-
-  saveUserInstance (user) {
-    localStorage.setItem(USER, JSON.stringify(user))
-  },
-
-  removeUserInstance () {
-    localStorage.removeItem(USER)
-  }
 }
 
 export { TokenService }

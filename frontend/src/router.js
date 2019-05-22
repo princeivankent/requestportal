@@ -58,7 +58,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const forVisitors = to.matched.some(record => record.meta.forVisitors)
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const loggedIn = !!TokenService.getUserInstance() && !!TokenService.getToken()
+  const loggedIn = !!TokenService.getToken()
 
   if (forVisitors) {
     if (loggedIn)

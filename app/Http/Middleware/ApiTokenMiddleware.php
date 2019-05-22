@@ -17,15 +17,6 @@ class ApiTokenMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /**
-         * -------------------
-         * Pseudocodes
-         * -------------------
-         * 
-         * 1. Query on user table, get access token if active
-         * 2. if access token is false, return 401 http response code (unauthenticated)
-         * 3. else, continue with the request
-         */
         $headers = $request->headers->all();
 
         if (!isset($headers['authorization']))
@@ -47,8 +38,8 @@ class ApiTokenMiddleware
 
         if ($query->expires_at <= Carbon::now()) {
             $expiration = Carbon::parse($query->expires_at);
-            $now = Carbon::now();
-            $idle_time = $expiration->diffInMinutes($now);
+            $now        = Carbon::now();
+            $idle_time  = $expiration->diffInMinutes($now);
             
             if ($idle_time >= config('auth.token_expiration')) {
                 // Should return expiration notification (401 - unauthorized)
