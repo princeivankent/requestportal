@@ -7,5 +7,3 @@ export default {
   name: 'App'
 }
 </script>
-
-<style lang="scss" src="@/App.scss" />
