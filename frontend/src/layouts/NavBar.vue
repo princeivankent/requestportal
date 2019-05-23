@@ -7,7 +7,7 @@
             <!-- begin:: Brand -->
             <div class="kt-header__brand " id="kt_header_brand">
               <div class="kt-header__brand-logo">
-                <a href="index.html">
+                <a href="">
                   <img alt="Logo" src="../assets/isuzu-logo-compressor.png" height="30" />
                 </a>
               </div>
@@ -60,14 +60,12 @@
                 </div>
               </div>
             </div>
-
             <!-- end:: Brand -->
 
             <!-- begin:: Header Topbar -->
             <div class="kt-header__topbar">
-
               <!--begin: Search -->
-              <div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+              <!-- <div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-icon"><i class="flaticon2-search-1"></i></span>
                 </div>
@@ -84,20 +82,17 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
+              </div> -->
               <!--end: Search -->
 
               <!--begin: Notifications -->
-              <div class="kt-header__topbar-item dropdown">
+              <!-- <div class="kt-header__topbar-item dropdown">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-icon"><i class="flaticon2-bell-alarm-symbol"></i></span>
                   <span class="kt-hidden kt-badge kt-badge--danger"></span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                   <form>
-
-                    <!--begin: Head -->
                     <div class="kt-head kt-head--skin-light kt-head--fit-x kt-head--fit-b">
                       <h3 class="kt-head__title">
                         User Notifications
@@ -116,8 +111,6 @@
                         </li>
                       </ul>
                     </div>
-
-                    <!--end: Head -->
                     <div class="tab-content">
                       <div class="tab-pane active show" id="topbar_notifications_notifications" role="tabpanel">
                         <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true" data-height="300" data-mobile-height="200">
@@ -478,19 +471,16 @@
                     </div>
                   </form>
                 </div>
-              </div>
-
+              </div> -->
               <!--end: Notifications -->
 
               <!--begin: Quick actions -->
-              <div class="kt-header__topbar-item dropdown">
+              <!-- <div class="kt-header__topbar-item dropdown">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-icon"><i class="flaticon2-gear"></i></span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                   <form>
-
-                    <!--begin: Head -->
                     <div class="kt-head kt-head--skin-light">
                       <h3 class="kt-head__title">
                         User Quick Actions
@@ -498,10 +488,6 @@
                         <span class="btn btn-success btn-sm btn-bold btn-font-md">23 tasks pending</span>
                       </h3>
                     </div>
-
-                    <!--end: Head -->
-
-                    <!--begin: Grid Nav -->
                     <div class="kt-grid-nav kt-grid-nav--skin-light">
                       <div class="kt-grid-nav__row">
                         <a href="#" class="kt-grid-nav__item">
@@ -556,23 +542,18 @@
                         </a>
                       </div>
                     </div>
-
-                    <!--end: Grid Nav -->
                   </form>
                 </div>
-              </div>
-
+              </div> -->
               <!--end: Quick actions -->
 
               <!--begin: Cart -->
-              <div class="kt-header__topbar-item dropdown">
+              <!-- <div class="kt-header__topbar-item dropdown">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-icon"><i class="flaticon2-shopping-cart-1"></i></span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                   <form>
-
-                    <!-- begin:: Mycart -->
                     <div class="kt-mycart">
                       <div class="kt-mycart__head kt-head" style="background-image: url(../assets/media/misc/bg-1.jpg);">
                         <div class="kt-mycart__info">
@@ -691,53 +672,49 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- end:: Mycart -->
                   </form>
                 </div>
-              </div>
-
+              </div> -->
               <!--end: Cart-->
 
               <!--begin: Quick panel toggler -->
-              <div class="kt-header__topbar-item" data-toggle="kt-tooltip" title="Quick panel" data-placement="top">
+              <!-- <div class="kt-header__topbar-item" data-toggle="kt-tooltip" title="Quick panel" data-placement="top">
                 <div class="kt-header__topbar-wrapper">
                   <span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn"><i class="flaticon2-menu-2"></i></span>
                 </div>
-              </div>
+              </div> -->
               <!--end: Quick panel toggler -->
 
               <!--begin: Language bar -->
-              <div class="kt-header__topbar-item kt-header__topbar-item--langs">
+              <!-- <div class="kt-header__topbar-item kt-header__topbar-item--langs">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-icon">
-                    <!-- <img class="" src=".../assets/media/flags/012-uk.svg" alt="" /> -->
+                    <img class="" src="../assets/media/flags/012-uk.svg" alt="" />
                   </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
                   <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
                     <li class="kt-nav__item kt-nav__item--active">
                       <a href="#" class="kt-nav__link">
-                        <!-- <span class="kt-nav__link-icon"><img src=".../assets/media/flags/020-flag.svg" alt="" /></span> -->
+                        <span class="kt-nav__link-icon"><img src="../assets/media/flags/020-flag.svg" alt="" /></span>
                         <span class="kt-nav__link-text">English</span>
                       </a>
                     </li>
                     <li class="kt-nav__item">
                       <a href="#" class="kt-nav__link">
-                        <!-- <span class="kt-nav__link-icon"><img src=".../assets/media/flags/016-spain.svg" alt="" /></span> -->
+                        <span class="kt-nav__link-icon"><img src="../assets/media/flags/016-spain.svg" alt="" /></span>
                         <span class="kt-nav__link-text">Spanish</span>
                       </a>
                     </li>
                     <li class="kt-nav__item">
                       <a href="#" class="kt-nav__link">
-                        <!-- <span class="kt-nav__link-icon"><img src=".../assets/media/flags/017-germany.svg" alt="" /></span> -->
+                        <span class="kt-nav__link-icon"><img src="../assets/media/flags/017-germany.svg" alt="" /></span>
                         <span class="kt-nav__link-text">German</span>
                       </a>
                     </li>
                   </ul>
                 </div>
-              </div>
-
+              </div> -->
               <!--end: Language bar -->
 
               <!--begin: User bar -->
@@ -761,13 +738,12 @@
                       <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
                     </div>
                     <div class="kt-user-card__name">
-                      {{ userDetails.name }}
+                      {{ userDetails.name }} ({{ userDetails.role }})
                     </div>
-                    <div class="kt-user-card__badge">
+                    <!-- <div class="kt-user-card__badge">
                       <span class="btn btn-label-primary btn-sm btn-bold btn-font-md">23 messages</span>
-                    </div>
+                    </div> -->
                   </div>
-
                   <!--end: Head -->
 
                   <!--begin: Navigation -->
@@ -785,7 +761,7 @@
                         </div>
                       </div>
                     </a>
-                    <a href="#" class="kt-notification__item">
+                    <!-- <a href="#" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-mail kt-font-warning"></i>
                       </div>
@@ -797,8 +773,8 @@
                           Inbox and tasks
                         </div>
                       </div>
-                    </a>
-                    <a href="#" class="kt-notification__item">
+                    </a> -->
+                    <!-- <a href="#" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-rocket-1 kt-font-danger"></i>
                       </div>
@@ -810,8 +786,8 @@
                           Logs and notifications
                         </div>
                       </div>
-                    </a>
-                    <a href="#" class="kt-notification__item">
+                    </a> -->
+                    <!-- <a href="#" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-hourglass kt-font-brand"></i>
                       </div>
@@ -823,7 +799,7 @@
                           latest tasks and projects
                         </div>
                       </div>
-                    </a>
+                    </a> -->
                     <div class="kt-notification__custom">
                       <button 
                         @click="logout"
@@ -834,14 +810,11 @@
                       </button>
                     </div>
                   </div>
-
                   <!--end: Navigation -->
                 </div>
               </div>
-
               <!--end: User bar -->
             </div>
-
             <!-- end:: Header Topbar -->
           </div>
         </div>

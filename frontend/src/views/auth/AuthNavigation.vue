@@ -6,7 +6,7 @@
           <div class="kt-container">
             <div class="kt-header__brand " id="kt_header_brand">
               <div class="kt-header__brand-logo">
-                <a href="index.html">
+                <a href="">
                   <img alt="Logo" src="@/assets/isuzu-logo-compressor.png" height="30" />
                 </a>
               </div>

@@ -8,7 +8,7 @@
             <div class="kt-portlet__head">
               <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">
-                  Basic Form Layout
+                  Rush Form Request
                 </h3>
               </div>
             </div>
@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import SubHeader from '../layouts/SubHeader'
 import { mapGetters } from 'vuex'
+import SubHeader from '../layouts/SubHeader'
 
 export default {
   name: 'Home',

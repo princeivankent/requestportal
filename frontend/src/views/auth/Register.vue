@@ -3,8 +3,8 @@
     <AuthNavigation />
     <div class="container-fluid mt-5">
       <div class="row justify-content-md-center">
-        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
-          <h3 class="text-center">Register</h3>
+        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3 col-xl-3">
+          <h3 class="text-center mb-4">Register</h3>
           <form @submit.prevent="register" novalidate>
             <div class="form-group">
               <label>Name</label>
