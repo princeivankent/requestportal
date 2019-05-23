@@ -1,23 +1,41 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" to="/home">
-        <img src="@/assets/isuzu-logo-compressor.png" height="30" class="d-inline-block align-top" alt="">
-      </a>
-      <button class="navbar-toggler" 
-      type="button" data-toggle="collapse" 
-      data-target="#navbarNav" aria-controls="navbarNav" 
-      aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <button 
-      @click="$router.push($route.path == '/login' ? '/register' : '/login')"
-      class="btn btn-sm btn-success my-2 my-sm-0"
-      >
-      {{ $route.path == '/login' ? 'REGISTER' : 'LOGIN' }}
-      </button>
+  <div class="kt-grid kt-grid--hor kt-grid--root">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+        <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed " data-ktheader-minimize="on">
+          <div class="kt-container">
+            <div class="kt-header__brand " id="kt_header_brand">
+              <div class="kt-header__brand-logo">
+                <a href="index.html">
+                  <img alt="Logo" src="@/assets/isuzu-logo-compressor.png" height="30" />
+                </a>
+              </div>
+            </div>
+            <!-- begin:: Header Topbar -->
+            <div class="kt-header__topbar">
+
+              <div class="kt-header__topbar-item" 
+                data-toggle="kt-tooltip" 
+                :title="$route.path == '/login' ? 'REGISTER' : 'LOGIN'" 
+                data-placement="top"
+              >
+                <div class="kt-header__topbar-wrapper">
+                  <span 
+                    class="kt-header__topbar-icon" 
+                    id="kt_quick_panel_toggler_btn"
+                    @click="$router.push($route.path == '/login' ? '/register' : '/login')"
+                  >
+                    <i class="flaticon2-user"></i>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>

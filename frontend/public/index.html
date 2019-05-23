@@ -12,7 +12,7 @@
 			WebFont.load({
         google: {"families":["Poppins:300,400,500,600,700","Asap+Condensed:500"]},
         active: function() {
-            sessionStorage.fonts = true;
+          sessionStorage.fonts = true;
         }
       });
     </script>
@@ -36,10 +36,24 @@
 		<link href="./assets/style.bundle.min.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Theme Styles -->
   </head>
-  <body class="kt-page--fluid kt-page-content-white kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
+  <body class="kt-page--fluid kt-page-content-white kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading kt-shape-bg-color-1">
     <noscript>
       <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+
+    <!-- Mobile view -->
+    <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
+			<div class="kt-header-mobile__logo">
+				<a href="index.html">
+					<img alt="Logo" src="./assets/isuzu-logo-compressor.png" height="30" />
+				</a>
+			</div>
+			<div class="kt-header-mobile__toolbar">
+				<button class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
+				<button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more-1"></i></button>
+			</div>
+		</div>
+    <!-- End Mobile View -->
 
     <!-- Vue Components -->
     <div id="app"></div>

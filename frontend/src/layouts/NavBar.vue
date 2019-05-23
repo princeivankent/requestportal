@@ -705,7 +705,6 @@
                   <span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn"><i class="flaticon2-menu-2"></i></span>
                 </div>
               </div>
-
               <!--end: Quick panel toggler -->
 
               <!--begin: Language bar -->

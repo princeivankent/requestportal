@@ -3,7 +3,7 @@
     <AuthNavigation />
     <div class="container-fluid mt-5">
       <div class="row justify-content-md-center">
-        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3 col-xl-3">
           <template v-if="$store.state.login.authenticating">
             <h4>Please wait, while authenticating ...</h4>
           </template>
