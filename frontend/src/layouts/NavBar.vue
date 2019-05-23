@@ -4,12 +4,11 @@
       <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
         <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed " data-ktheader-minimize="on">
           <div class="kt-container">
-
             <!-- begin:: Brand -->
             <div class="kt-header__brand " id="kt_header_brand">
               <div class="kt-header__brand-logo">
                 <a href="index.html">
-                  <img alt="Logo" src="../assets/media/logos/logo-11.png" />
+                  <img alt="Logo" src="../assets/isuzu-logo-compressor.png" height="30" />
                 </a>
               </div>
               <div class="kt-header__brand-nav">
@@ -746,8 +745,10 @@
               <div class="kt-header__topbar-item kt-header__topbar-item--user">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                   <span class="kt-header__topbar-welcome kt-visible-desktop">Hi,</span>
-                  <span class="kt-header__topbar-username kt-visible-desktop">Nick</span>
-                  <img alt="Pic" src="../assets/media/users/300_21.jpg" />
+                  <span class="kt-header__topbar-username kt-visible-desktop">
+                    {{ userDetails.name }}
+                  </span>
+                  <img alt="Pic" src="../assets/dealer.png" />
                   <span class="kt-header__topbar-icon kt-bg-brand kt-hidden"><b>S</b></span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
@@ -755,13 +756,13 @@
                   <!--begin: Head -->
                   <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
                     <div class="kt-user-card__avatar">
-                      <img class="kt-hidden-" alt="Pic" src="../assets/media/users/300_25.jpg" />
+                      <img class="kt-hidden-" alt="Pic" src="../assets/dealer.png" />
 
                       <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                       <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
                     </div>
                     <div class="kt-user-card__name">
-                      Sean Stone
+                      {{ userDetails.name }}
                     </div>
                     <div class="kt-user-card__badge">
                       <span class="btn btn-label-primary btn-sm btn-bold btn-font-md">23 messages</span>
@@ -825,7 +826,13 @@
                       </div>
                     </a>
                     <div class="kt-notification__custom">
-                      <a href="custom_user_login-v2.html" target="_blank" class="btn btn-label-brand btn-sm btn-bold">Sign Out</a>
+                      <button 
+                        @click="logout"
+                        target="_blank" 
+                        class="btn btn-label-brand btn-sm btn-bold"
+                      >
+                      Sign Out
+                      </button>
                     </div>
                   </div>
 
@@ -845,8 +852,12 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 'NavBar',
+  computed: {
+    ...mapGetters('login', ['userDetails'])
+  },
   methods: {
     logout () {
       if (confirm('Are you sure to logout?'))

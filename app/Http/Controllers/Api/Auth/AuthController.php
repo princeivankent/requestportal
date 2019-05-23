@@ -44,6 +44,7 @@ class AuthController extends Controller
             'employee_id' => $query->id,
             'token'       => $jwt->encrypt([
                 'role'           => $user_role->role($query->user_type_id),
+                'employee_id'    => $query->id,
                 'employee_no'    => $query->employee_no,
                 'name'           => $query->name,
                 'position_title' => $query->position_title,
