@@ -12,5 +12,18 @@ module.exports = {
   // make sure to do this only in production.
   indexPath: process.env.NODE_ENV === 'production'
     ? '../resources/views/index.blade.php'
-    : 'index.html'
+    : 'index.html',
+
+  /**
+   * For SVG file loader
+   */
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule('svg');
+ 
+    svgRule.uses.clear();
+ 
+    svgRule
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
+  },
 }

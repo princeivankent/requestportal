@@ -8710,34 +8710,16 @@ var KTLayout = function() {
     var initHeader = function() {
         var tmp;
         var headerEl = KTUtil.get('kt_header');
-        
+        var headerMobileEl = KTUtil.get('kt_header_mobile');
+
         var options = {
             classic: {
                 desktop: true,
-                mobile: false
-            },
-            offset: {
-                desktop: parseInt(KTUtil.css(headerEl, 'height')) + 200
-            },
-            minimize: {
-                mobile: false,
-                desktop: {
-                    on: 'kt-header--minimize'
-                }
+                mobile: true
             }
         };
 
         header = new KTHeader('kt_header', options);
-
-        if (asideMenu) {
-            header.on('minimizeOn', function() {
-                asideMenu.scrollReInit();
-            });
-
-            header.on('minimizeOff', function() {
-                asideMenu.scrollReInit();
-            });
-        }        
     }
 
     // Header Menu
@@ -8928,14 +8910,14 @@ var KTLayout = function() {
                     },
                     left: function() {
                         if (KTUtil.isInResponsiveRange('tablet-and-mobile')) {    
-                            return parseInt(KTUtil.css( KTUtil.get('kt_body'), 'paddingLeft'));
+                            return parseInt(KTUtil.css( KTUtil.get('kt_content_wrapper'), 'paddingLeft'));
                         }
 
                         return;
                     },
                     right: function() {
                         if (KTUtil.isInResponsiveRange('tablet-and-mobile')) {    
-                            return parseInt(KTUtil.css( KTUtil.get('kt_body'), 'paddingRight'));
+                            return parseInt(KTUtil.css( KTUtil.get('kt_content_wrapper'), 'paddingRight'));
                         }
 
                         return;

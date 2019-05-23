@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>Request Portal</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
 		<script>
 			WebFont.load({
-        google: {"families":["Poppins:300,400,500,600,700"]},
+        google: {"families":["Poppins:300,400,500,600,700","Asap+Condensed:500"]},
         active: function() {
             sessionStorage.fonts = true;
         }
@@ -18,22 +18,30 @@
     </script>
 
     <!--begin::Page Vendors Styles(used by this page) -->
-		<link href="./assets/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="./assets/fullcalendar.bundle.min.css" rel="stylesheet" type="text/css" />
 		<!--end::Page Vendors Styles -->
 
     <!--begin:: Global Mandatory Vendors -->
 		<link href="./assets/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
 		<!--end:: Global Mandatory Vendors -->
 
+    <!-- Fonts -->
+    <link href="./assets/line-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/flaticon.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/flaticon2.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/all.min.css" rel="stylesheet" type="text/css" />
+    <!-- end:fonts -->
+
     <!--begin::Global Theme Styles(used by all pages) -->
-		<link href="./assets/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="./assets/style.bundle.min.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Theme Styles -->
   </head>
-  <body>
+  <body class="kt-page--fluid kt-page-content-white kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
     <noscript>
       <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    
+
+    <!-- Vue Components -->
     <div id="app"></div>
     <!-- built files will be auto injected -->
 
@@ -42,7 +50,7 @@
 			var KTAppOptions = {
 				"colors": {
 					"state": {
-						"brand": "#374afb",
+						"brand": "#5d78ff",
 						"light": "#ffffff",
 						"dark": "#282a3c",
 						"primary": "#5867dd",
@@ -61,23 +69,23 @@
 		<!-- end::Global Config -->
 
 		<!--begin:: Global Mandatory Vendors -->
-		<script src="./assets/jquery.js" type="text/javascript"></script>
-		<script src="./assets/popper.js" type="text/javascript"></script>
+		<script src="./assets/jquery.min.js" type="text/javascript"></script>
+		<script src="./assets/popper.min.js" type="text/javascript"></script>
 		<script src="./assets/bootstrap.min.js" type="text/javascript"></script>
 		<script src="./assets/js.cookie.js" type="text/javascript"></script>
 		<script src="./assets/moment.min.js" type="text/javascript"></script>
 		<script src="./assets/tooltip.min.js" type="text/javascript"></script>
-		<script src="./assets/perfect-scrollbar.js" type="text/javascript"></script>
+		<script src="./assets/perfect-scrollbar.min.js" type="text/javascript"></script>
 		<script src="./assets/sticky.min.js" type="text/javascript"></script>
 		<script src="./assets/wNumb.js" type="text/javascript"></script>
 		<!--end:: Global Mandatory Vendors -->
 
     <!--begin::Global Theme Bundle(used by all pages) -->
-		<script src="./assets/scripts.bundle.js" type="text/javascript"></script>
+		<script src="./assets/scripts.bundle.min.js" type="text/javascript"></script>
 		<!--end::Global Theme Bundle -->
 
     <!--begin::Global App Bundle(used by all pages) -->
-		<script src="./assets/app.bundle.js" type="text/javascript"></script>
+		<script src="./assets/app.bundle.min.js" type="text/javascript"></script>
 		<!--end::Global App Bundle -->
   </body>
 </html>
