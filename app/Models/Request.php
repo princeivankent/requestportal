@@ -9,4 +9,9 @@ class Request extends Model
     protected $fillable = [
         'request_code', 'created_by', 'approver_id', 'justification'
     ];
+
+    public function request_items()
+    {
+        return $this->hasMany('App\Models\RequestItem');
+    }
 }

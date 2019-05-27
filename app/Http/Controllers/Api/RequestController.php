@@ -2,68 +2,42 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Employee;
-
 use DB;
 use Illuminate\Http\Request;
 use App\Services\CodeGenerator;
 use App\Http\Controllers\Controller;
-use App\Services\ApiValidator;
 use App\Models\Request as RequestModel;
 use App\Models\RequestItem;
+use Validator;
 
 class RequestController extends Controller
 {
     public function get_requests($request_code = null)
     {
-        $query = DB::table('requests AS rs');
-
-        $query->select(
-            'rs.id',
-            'rs.request_code',
-            'rs.created_by',
-            'rs.approver_id',
-            'rs.justification',
-            'ri.item_id',
-            'ri.target_date',
-            'ri.remarks',
-            'ri.item_approver_id',
-            'i.description as item_description',
-            'ipt.id',
-            'ipt.type AS approver_type'
-        )
-        ->leftJoin('request_items AS ri', 'ri.request_id', '=', 'rs.id')
-        ->leftJoin('items AS i', 'i.id', '=', 'ri.item_id')
-        ->leftJoin('item_approver_types AS ipt', 'ipt.id', '=', 'i.item_approver_type_id');
+        $query = RequestModel::with('request_items.item.item_approver_type');
 
         if ($request_code)
-            return response()->json($query->where([
-                'request_code' => $request_code
-            ])->first());
+            return response()->json($query->whereRequestCode($request_code)->first());
 
         return response()->json($query->get());
     }
 
     public function send_request(
         Request $request,
-        CodeGenerator $code_generator,
-        Employee $employee,
-        ApiValidator $validator
+        CodeGenerator $code_generator
     )
     {
+        $validate = Validator::make($request->all(), [
+            'created_by'    => 'required',
+            'approver_id'   => 'required',
+            'justification' => 'string|max:255',
+            'items'         => 'required|array'
+        ]);
+
+        if ($validate->fails()) return response()->json($validate->errors(), 422);
+
         try {
             DB::beginTransaction();
-
-            $req_status = $validator->validate($request->all(), [
-                'created_by'    => 'required',
-                'approver_id'   => 'required',
-                'justification' => 'string|nullable|max:255',
-                'item_id'       => 'required|exists:items,id',
-                'target_date'   => 'required|date'
-            ]);
-
-            if ($req_status)
-                return response()->json($req_status, 422);
 
             // Save requests table
             $query1 = RequestModel::create([
@@ -73,11 +47,15 @@ class RequestController extends Controller
                 'justification' => $request->justification,
             ]);
 
-            $query2 = RequestItem::create([
-                'request_id' => $query1->id,
-                'item_id' => $request->item_id,
-                'target_date' => $request->target_date
-            ]);
+            $items = $request->items;
+
+            foreach ($items as $value) {
+                RequestItem::create([
+                    'request_id'  => $query1->id,
+                    'item_id'     => $value['item_id'],
+                    'target_date' => $value['target_date']
+                ]);
+            }
 
             DB::commit();
 
