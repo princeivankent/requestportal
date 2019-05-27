@@ -40,7 +40,7 @@ class ApiTokenMiddleware
             $expiration = Carbon::parse($query->expires_at);
             $now        = Carbon::now();
             $idle_time  = $expiration->diffInMinutes($now);
-            
+
             if ($idle_time >= config('auth.token_expiration')) {
                 // Should return expiration notification (401 - unauthorized)
                 return response()->json([

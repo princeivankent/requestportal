@@ -50,7 +50,8 @@ class AuthController extends Controller
                 'position_title' => $query->position_title,
                 'department'     => $query->department,
                 'division'       => $query->division,
-                'section'        => $query->section
+                'section'        => $query->section,
+                'created_at'     => Carbon::now()->toDateTimeString()
             ]),
             'revoked'    => 0,
             'expires_at' => Carbon::now()->addMinutes(config('auth.token_expiration'))
