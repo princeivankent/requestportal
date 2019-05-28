@@ -828,7 +828,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'NavBar',
   computed: {
-    ...mapGetters('login', ['userDetails'])
+    ...mapGetters('login', ['userDetails']),
   },
   methods: {
     logout () {

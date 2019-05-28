@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { TokenService } from './storage.service'
-import {store} from '@/store/index'
+import store from '@/store/index'
 
 const ApiService = {
 
@@ -50,13 +50,21 @@ const ApiService = {
     return axios(data)
   },
 
+  /**
+   * -----------------------------------
+   * 401 (unauthorized) interceptor
+   * -----------------------------------
+   * 
+   * This will capture 401 http status code
+   * which is unauthorized, so you can auto log out
+   * user or refresh their tokens.
+   * 
+   */
   mount401Interceptor() {
     this._401interceptor = axios.interceptors.response.use(
-      (response) => {
-        return response
-      },
+      (response) => response,
       async (error) => {
-        if (error.request.status == 401) {
+        if (error.request.status === 401) {
           store.dispatch('login/logout')
           throw error
         }

@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
   // Dynamic public path for dev/prod environment
   publicPath: 
@@ -26,4 +28,16 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
+
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        Vue: ['vue/dist/vue.esm.js', 'default'],
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        $: 'jquery',
+        moment: 'moment',
+      }),
+    ]
+  }
 }

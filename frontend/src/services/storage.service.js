@@ -1,5 +1,4 @@
 const TOKEN_KEY = 'access_token'
-const USER = 'user'
 
 /**
  * Manage the how Access Tokens are being stored and retreived from storage.

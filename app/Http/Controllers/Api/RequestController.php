@@ -14,10 +14,13 @@ class RequestController extends Controller
 {
     public function get_requests($request_code = null)
     {
-        $query = RequestModel::with('request_items.item.item_approver_type');
+        $query = RequestModel::with('requested_items.item.item_approver_type');
 
-        if ($request_code)
-            return response()->json($query->whereRequestCode($request_code)->first());
+        if ($request_code) {
+            $query_id = $query->whereRequestCode($request_code)->first();
+
+            return response()->json($query_id);
+        }
 
         return response()->json($query->get());
     }

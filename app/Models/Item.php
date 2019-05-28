@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+    protected $hidden = ['created_at','updated_at'];
+    
     protected $fillable = [
         'description', 'item_approver_type_id'
     ];

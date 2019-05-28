@@ -107,8 +107,7 @@ const UserService = {
       // ApiService.unmount401Interceptor()
     } 
     catch (error) {
-      // throw new RegistrationError(error.response.status, error.response.data.message)
-      console.log(error)
+      throw new RegistrationError(error.response.status, error.response.data.message)
     }
   }
 }

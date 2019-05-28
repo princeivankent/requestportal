@@ -2,11 +2,10 @@
   <!-- Subheader -->
   <div class="kt-subheader   kt-grid__item" id="kt_subheader">
     <div class="kt-subheader__main">
-      <h3 class="kt-subheader__title">
-        Default Forms </h3>
+      <!-- <h3 class="kt-subheader__title">Default Forms</h3> -->
       <span class="kt-subheader__separator kt-hidden"></span>
       <div class="kt-subheader__breadcrumbs">
-        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+        <!-- <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
         <span class="kt-subheader__breadcrumbs-separator"></span>
         <a href="" class="kt-subheader__breadcrumbs-link">
           Crud </a>
@@ -18,7 +17,7 @@
           Form Layouts </a>
         <span class="kt-subheader__breadcrumbs-separator"></span>
         <a href="" class="kt-subheader__breadcrumbs-link">
-          Default Forms </a>
+          Default Forms </a> -->
 
         <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
       </div>
@@ -27,7 +26,7 @@
       <div class="kt-subheader__wrapper">
         <a href="#" class="btn kt-subheader__btn-daterange" id="kt_dashboard_daterangepicker" data-toggle="kt-tooltip" title="Select dashboard daterange" data-placement="left">
           <span class="kt-subheader__btn-daterange-title" id="kt_dashboard_daterangepicker_title">Today</span>&nbsp;
-          <span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">Aug 16</span>
+          <span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">{{ getDateNow }}</span>
 
           <!--<i class="flaticon2-calendar-1"></i>-->
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--sm">
@@ -93,7 +92,14 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
-  name: 'SubHeader'
+  name: 'SubHeader',
+  computed: {
+    getDateNow () {
+      return moment().format("dddd, MMMM Do YYYY")
+    }
+  }
 }
 </script>

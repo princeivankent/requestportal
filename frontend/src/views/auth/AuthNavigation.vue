@@ -14,16 +14,17 @@
             <!-- begin:: Header Topbar -->
             <div class="kt-header__topbar">
 
+              <!-- :title="$route.path == '/login' ? 'REGISTER' : 'LOGIN'"  -->
               <div class="kt-header__topbar-item" 
                 data-toggle="kt-tooltip" 
-                :title="$route.path == '/login' ? 'REGISTER' : 'LOGIN'" 
+                title="login"
                 data-placement="top"
               >
                 <div class="kt-header__topbar-wrapper">
+                  <!-- @click="$router.push($route.path == '/login' ? '/register' : '/login')" -->
                   <span 
                     class="kt-header__topbar-icon" 
                     id="kt_quick_panel_toggler_btn"
-                    @click="$router.push($route.path == '/login' ? '/register' : '/login')"
                   >
                     <i class="flaticon2-user"></i>
                   </span>
