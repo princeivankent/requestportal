@@ -10,4 +10,7 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::post('requests', 'RequestController@send_request');
 
     Route::get('items', 'ItemController@get_items');
+
+    // 
+    Route::get('approvers/{employee_id}', 'ApproversController@get_approvers');
 });
