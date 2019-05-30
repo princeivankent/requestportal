@@ -33,11 +33,13 @@ class RequestController extends Controller
         $validate = Validator::make($request->all(), [
             'created_by'    => 'required',
             'approver_id'   => 'required',
-            'justification' => 'string|max:255',
+            'justification' => 'required',
             'items'         => 'required|array'
         ]);
 
-        if ($validate->fails()) return response()->json($validate->errors(), 422);
+        if ($validate->fails()) return response()->json([
+            'form_errors' => $validate->errors()
+        ], 422);
 
         try {
             DB::beginTransaction();
