@@ -60,9 +60,9 @@ class ApiTokenMiddleware
                     ], 500);
                 
                 // Remove this soon
-                return response()->json([
-                    'message' => 'your token has been updated'
-                ]);
+                // return response()->json([
+                //     'message' => 'your token has been updated'
+                // ]);
             }
         }
 
