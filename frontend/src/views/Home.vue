@@ -114,7 +114,7 @@
     },
     computed: {
       ...mapGetters('request', [
-        'getAllItems'
+        'getAllItems', 'getAllApprovers'
       ]),
 
       employeeId () {
@@ -137,11 +137,12 @@
         if (value.length === 5)
           this.$store.dispatch('request/getItems', value)
         else
-          this.$store.dispatch('request/setDefaultItems', this.employeeId)
+          this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
       }
     },
-    mounted () {
-      this.$store.dispatch('request/setDefaultItems', this.employeeId)
+    created () {
+      this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
+      this.$store.dispatch('request/setApproversAction', this.employeeId)
     },
     methods: {
       targetDateForm (index, value) {
@@ -156,7 +157,7 @@
         const request = await this.$store.dispatch('request/submitFormRequest')
         
         if (request) {
-          this.$store.dispatch('request/setDefaultItems', this.employeeId)
+          this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
           this.$notify({
             group: 'foo',

@@ -1,5 +1,6 @@
 import { RequestService, RequestError } from '../../services/modules/request.service'
 import ItemService from '../../services/modules/item.service'
+import ApproverService from '../../services/modules/approver.service';
 import _ from 'lodash'
 
 const request = {
@@ -9,11 +10,13 @@ const request = {
     submission: false,
     submissionError: {},
     submissionErrorCode: '',
-    items: {}
+    items: {},
+    approvers: []
   },
 
   getters: {
-    getAllItems: (state) => state.items
+    getAllItems: (state) => state.items,
+    getAllApprovers: (state) => state.approvers,
   },
 
   mutations: {
@@ -63,12 +66,16 @@ const request = {
     SET_JUSTIFICATION (state, justification) {
       state.submissionError.justification = ''
       state.items.justification = justification
+    },
+
+    SET_APPROVERS (state, approvers) {
+      state.approvers = approvers
     }
   },
 
   actions: {
 
-    async setDefaultItems ({commit}, id) {
+    async setDefaultItemsAction ({commit}, id) {
       const {data} = await ItemService.getAllItems()
       await commit('SET_DEFAULT_ITEMS', data)
       return commit('SET_CREATED_BY', id)
@@ -81,6 +88,11 @@ const request = {
       }
 
       return {}
+    },
+
+    async setApproversAction ({commit}, employee_id) {
+      const {data} = await ApproverService.getAllApprovers(employee_id)
+      return commit('SET_APPROVERS', data)
     },
 
     async submitFormRequest ({commit, state}) {

@@ -21,7 +21,14 @@
         :class="`form-control col-md-6 ${$store.state.request.submissionError.approver_id ? 'is-invalid' : ''}`" 
         id="exampleSelect1"
       >
-        <option>1257</option>
+        <option value="">-- SELECT APPROVER --</option>
+        <option 
+          v-for="(item, index) in getAllApprovers" 
+          :key="index"
+          :value="item.employee_id"
+        >
+          {{ item.name }}
+        </option>
       </select>
       <div 
         v-if="$store.state.request.submissionError.approver_id"
@@ -34,9 +41,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'RequestForm',
   computed: {
+    ...mapGetters('request', [
+      'getAllApprovers'
+    ]),
+
     justification: {
       get () {
         return this.$store.state.request.items.justification
