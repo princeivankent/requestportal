@@ -63,11 +63,12 @@
                           :value="item.target_date"
                           :calendar-button="true"
                           :bootstrap-styling="true"
-                          :clear-button="true"
+                          :clear-button="isFormDisabled ? false : true"
                           format="MMM dd yyyy"
                           calendar-button-icon="la la-calendar-check-o"
                           placeholder="Select date" 
                           readonly
+                          :disabled="isFormDisabled"
                         ></datepicker>
                       </td>
                       <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
@@ -83,6 +84,7 @@
                   <button 
                     @click="onSubmitRequest()"
                     class="btn btn-brand"
+                    :disabled="isFormDisabled"
                   >
                     <i class="la la-check"></i>
                     Submit
@@ -116,7 +118,7 @@ export default {
   },
   computed: {
     ...mapGetters('request', [
-      'getAllItems', 'getAllApprovers'
+      'getAllItems', 'getAllApprovers', 'isFormDisabled'
     ]),
 
     employeeId () {

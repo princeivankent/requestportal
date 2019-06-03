@@ -16,6 +16,7 @@ const request = {
   getters: {
     getAllItems: (state) => state.items,
     getAllApprovers: (state) => state.approvers,
+    isFormDisabled: (state) => state.items.request_code ? true : false
   },
 
   mutations: {

@@ -6,6 +6,7 @@
         v-model="justification"
         :class="`form-control col-md-12 ${$store.state.request.submissionError.justification ? 'is-invalid' : ''}`" 
         id="justification" rows="3"
+        :disabled="isFormDisabled"
       ></textarea>
       <div 
         v-if="$store.state.request.submissionError.justification"
@@ -20,6 +21,7 @@
         v-model="approverId"
         :class="`form-control col-md-6 ${$store.state.request.submissionError.approver_id ? 'is-invalid' : ''}`" 
         id="exampleSelect1"
+        :disabled="isFormDisabled"
       >
         <option value="">-- SELECT APPROVER --</option>
         <option 
@@ -47,7 +49,7 @@ export default {
   name: 'RequestForm',
   computed: {
     ...mapGetters('request', [
-      'getAllApprovers'
+      'getAllApprovers','isFormDisabled'
     ]),
 
     justification: {
