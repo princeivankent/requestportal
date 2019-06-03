@@ -30,19 +30,4 @@ class PDFController extends Controller
         ]);
         return $pdf->stream('request-form.pdf');
     }
-
-    public function ToObject($Array) { 
-        // Create new stdClass object 
-        $object = new \stdClass(); 
-        
-        // Use loop to convert array into 
-        // stdClass object 
-        foreach ($Array as $key => $value) { 
-            if (is_array($value)) { 
-                $value = $this->ToObject($value); 
-            } 
-            $object->$key = $value; 
-        } 
-        return $object; 
-    } 
 }
