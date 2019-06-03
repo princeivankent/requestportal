@@ -8,7 +8,7 @@
             <div class="kt-header__brand " id="kt_header_brand">
               <div class="kt-header__brand-logo">
                 <a href="">
-                  <img alt="Logo" src="../assets/isuzu-logo-compressor.png" height="30" />
+                  <img alt="Logo" src="../assets/isuzu-logo-compressor.png" height="30" class="no-print" />
                 </a>
               </div>
               <div class="kt-header__brand-nav">
@@ -21,10 +21,10 @@
                       <li class="kt-nav__item">
                         <a class="kt-nav__link active" href="#">
                           <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
-                          <span class="kt-nav__link-text">Human Resources</span>
+                          <span class="kt-nav__link-text">Your Request</span>
                         </a>
                       </li>
-                      <li class="kt-nav__item">
+                      <!-- <li class="kt-nav__item">
                         <a class="kt-nav__link" href="#">
                           <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
                           <span class="kt-nav__link-text">Customer Relationship</span>
@@ -54,7 +54,7 @@
                           <span class="kt-nav__link-icon"><i class="flaticon2-cup"></i></span>
                           <span class="kt-nav__link-text">Administration</span>
                         </a>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>
@@ -838,3 +838,4 @@ export default {
   }
 }
 </script>
+

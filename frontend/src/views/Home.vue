@@ -44,7 +44,7 @@
                     Please select atleast one (1) item to request.
                   </div>
                 </div>
-                <table class="table table-striped table-bordered table-hover table-checkable">
+                <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
                   <thead>
                     <tr>
                       <th><i class="fa fa-hashtag"></i></th>
@@ -98,86 +98,179 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import SubHeader from '../layouts/SubHeader'
-  import Datepicker from 'vuejs-datepicker'
-  import moment from 'moment'
-  import RequestForm from '@/components/RequestForm'
+import { mapGetters } from 'vuex'
+import SubHeader from '../layouts/SubHeader'
+import Datepicker from 'vuejs-datepicker'
+import moment from 'moment'
+import RequestForm from '@/components/RequestForm'
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-  export default {
-    name: 'Home',
-    components: {SubHeader,Datepicker,RequestForm},
-    data () {
-      return {
-        active_search: ''
+export default {
+  name: 'Home',
+  components: {SubHeader,Datepicker,RequestForm},
+  data () {
+    return {
+      active_search: ''
+    }
+  },
+  computed: {
+    ...mapGetters('request', [
+      'getAllItems', 'getAllApprovers'
+    ]),
+
+    employeeId () {
+      return this.$store.getters['login/userDetails'].employee_id
+    },
+
+    items () {
+      if (!this.getAllItems) return [];
+
+      return this.getAllItems.requested_items
+    },
+
+    itemErrors () {
+      const items = this.$store.state.request.submissionError.items;
+      return items ? items : []
+    }
+  },
+  watch: {
+    active_search (value) {
+      if (value.length === 5)
+        this.$store.dispatch('request/getItems', value)
+      else
+        this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
+    }
+  },
+  created () {
+    this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
+    this.$store.dispatch('request/setApproversAction', this.employeeId)
+  },
+  mounted () {
+    // this.printPDF()
+  },
+  methods: {
+    targetDateForm (index, value) {
+      if (value === null || value === undefined || value === '') {
+        return this.$store.commit('request/SET_TARGET_DATE', {index, target_date: ''})
       }
+
+      return this.$store.commit('request/SET_TARGET_DATE', {index, target_date: moment(value).format('YYYY-MM-DD')})
     },
-    computed: {
-      ...mapGetters('request', [
-        'getAllItems', 'getAllApprovers'
-      ]),
 
-      employeeId () {
-        return this.$store.getters['login/userDetails'].employee_id
-      },
+    async onSubmitRequest () {
+      const request = await this.$store.dispatch('request/submitFormRequest')
+      
+      if (request) {
+        this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-      items () {
-        if (!this.getAllItems) return [];
-
-        return this.getAllItems.requested_items
-      },
-
-      itemErrors () {
-        const items = this.$store.state.request.submissionError.items;
-        return items ? items : []
-      }
-    },
-    watch: {
-      active_search (value) {
-        if (value.length === 5)
-          this.$store.dispatch('request/getItems', value)
-        else
-          this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
-      }
-    },
-    created () {
-      this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
-      this.$store.dispatch('request/setApproversAction', this.employeeId)
-    },
-    methods: {
-      targetDateForm (index, value) {
-        if (value === null || value === undefined || value === '') {
-          return this.$store.commit('request/SET_TARGET_DATE', {index, target_date: ''})
-        }
-
-        return this.$store.commit('request/SET_TARGET_DATE', {index, target_date: moment(value).format('YYYY-MM-DD')})
-      },
-
-      async onSubmitRequest () {
-        const request = await this.$store.dispatch('request/submitFormRequest')
+        this.printPDF(this.paramEnricher())
         
-        if (request) {
-          this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
-
-          this.$notify({
-            group: 'foo',
-            type: 'success',
-            title: 'System Alert',
-            text: 'Your request has been successfully submitted!',
-            speed: 1000,
-            duration: 5000
-          })
-        }
+        this.$notify({
+          group: 'foo',
+          type: 'success',
+          title: 'System Alert',
+          text: 'Your request has been successfully submitted!',
+          speed: 1000,
+          duration: 5000
+        })
       }
     },
-    filters: {
-      upperCase: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        var str = value.replace('_', ' ')
-        return str.charAt(0).toUpperCase() + str.slice(1)
+
+    paramEnricher () {
+      const approver_id = this.$store.state.request.items.approver_id
+      const approvers = this.$store.state.request.approvers
+      const items = this.$store.state.request.items.requested_items.filter(item => item.target_date)
+
+      const newArray = []
+      items.forEach((element, index) => {
+        newArray[index] = [
+          element.item.description, 
+          moment(element.target_date).format("MMMM D YYYY"),
+          element.item.item_approver_type.type
+        ]
+      })
+
+      const pdfParams = {
+        requesting_department: this.$store.getters['login/userDetails']['department'],
+        submission_date: moment().format("MMMM D YYYY"),
+        items: newArray,
+        justification: this.$store.state.request.items.justification,
+        prepared_by: this.$store.getters['login/userDetails']['name'],
+        approved_by: approvers.find(item => item.employee_id === approver_id)['name']
       }
+
+      return pdfParams
+    },
+
+    async printPDF (pdfParams) {
+      console.log(pdfParams)
+      var doc = new jsPDF()
+
+      doc.text("RUSH FORM", 12, 20)
+
+      doc.setFontSize(9)
+      doc.text('Requesting Department: ', 12, 30)
+      doc.text(pdfParams.requesting_department, 48, 30)
+
+      doc.text('Submission Date: ', 152, 30)
+      doc.text(pdfParams.submission_date, 178, 30)
+
+      doc.autoTable({
+        margin: {top: 40, right: 12, left: 12},
+        head: [['Request Item', 'Target Date of releasing', 'Approver']],
+        body: pdfParams.items
+      });
+
+      doc.text('Justification', 12, 90)
+      doc.setFillColor('#F3F3F3');
+      doc.rect(12, 95, 186, 40, 'F');
+      doc.text(pdfParams.justification, 14, 100)
+
+      doc.setLineWidth(0.70)
+      doc.setDrawColor('#000000')
+      doc.line(12, 142, 195, 142)
+      doc.setDrawColor('#7F7F7F')
+      doc.setLineWidth(0.1)
+
+      doc.text('Prepared by:', 12, 150)
+      doc.line(12, 175, 60, 175); // x, y, w,y
+      doc.text('Name and Signature', 20, 179)
+      doc.text(pdfParams.prepared_by, 16, 173)
+
+      doc.text('Approved by:', 150, 150)
+      doc.line(145, 175, 195, 175); // x, y, w, y
+      doc.text('Manager Superior', 155, 179)
+      doc.text(pdfParams.approved_by, 151, 173)
+
+      doc.setLineWidth(0.70)
+      doc.setDrawColor('#000000')
+      doc.line(12, 189, 195, 189)
+      doc.setDrawColor('#7F7F7F')
+      doc.setLineWidth(0.1)
+
+      // accounting
+      doc.text('Remarks:', 12, 200)
+      doc.line(12, 225, 60, 225); // x, y, w,y
+      doc.text('Approved by:', 25, 229)
+
+      // css
+      doc.text('Remarks:', 150, 200)
+      doc.line(145, 225, 195, 225); // x, y, w, y
+      doc.text('Approved by:', 160, 229)
+
+      // doc.output('dataurlnewwindow', {}) // for testing
+      doc.save('rush form request.pdf')
+    }
+
+  },
+  filters: {
+    upperCase: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      var str = value.replace('_', ' ')
+      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
+}
 </script>
-

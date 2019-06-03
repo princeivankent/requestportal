@@ -1,7 +1,6 @@
 import { RequestService, RequestError } from '../../services/modules/request.service'
 import ItemService from '../../services/modules/item.service'
 import ApproverService from '../../services/modules/approver.service';
-import _ from 'lodash'
 
 const request = {
   namespaced: true,
