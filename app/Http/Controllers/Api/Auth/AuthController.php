@@ -72,7 +72,7 @@ class AuthController extends Controller
         if (!$sql)
             return response()->json([
                 'message' => 'Token doesn\'t exists!'
-            ], 404);
+            ], 200);
 
         if (!$query->update(['revoked' => 1]))
             return response()->json([
