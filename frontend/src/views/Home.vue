@@ -148,9 +148,6 @@ export default {
     this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
     this.$store.dispatch('request/setApproversAction', this.employeeId)
   },
-  mounted () {
-    // this.printPDF()
-  },
   methods: {
     targetDateForm (index, value) {
       if (value === null || value === undefined || value === '') {
@@ -204,66 +201,6 @@ export default {
 
       return pdfParams
     },
-
-    async printPDF (pdfParams) {
-      var doc = new jsPDF()
-
-      doc.text("RUSH FORM", 12, 20)
-
-      doc.setFontSize(9)
-      doc.text('Requesting Department: ', 12, 30)
-      doc.text(pdfParams.requesting_department, 48, 30)
-
-      doc.text('Submission Date: ', 152, 30)
-      doc.text(pdfParams.submission_date, 178, 30)
-
-      doc.autoTable({
-        margin: {top: 40, right: 12, left: 12},
-        head: [['Request Item', 'Target Date of releasing', 'Approver']],
-        body: pdfParams.items
-      });
-
-      doc.text('Justification', 12, 90)
-      doc.setFillColor('#F3F3F3');
-      doc.rect(12, 95, 186, 40, 'F');
-      doc.text(pdfParams.justification, 14, 100)
-
-      doc.setLineWidth(0.70)
-      doc.setDrawColor('#000000')
-      doc.line(12, 142, 195, 142)
-      doc.setDrawColor('#7F7F7F')
-      doc.setLineWidth(0.1)
-
-      doc.text('Prepared by:', 12, 150)
-      doc.line(12, 175, 60, 175); // x, y, w,y
-      doc.text('Name and Signature', 20, 179)
-      doc.text(pdfParams.prepared_by, 16, 173)
-
-      doc.text('Approved by:', 150, 150)
-      doc.line(145, 175, 195, 175); // x, y, w, y
-      doc.text('Manager Superior', 155, 179)
-      doc.text(pdfParams.approved_by, 151, 173)
-
-      doc.setLineWidth(0.70)
-      doc.setDrawColor('#000000')
-      doc.line(12, 189, 195, 189)
-      doc.setDrawColor('#7F7F7F')
-      doc.setLineWidth(0.1)
-
-      // accounting
-      doc.text('Remarks:', 12, 200)
-      doc.line(12, 225, 60, 225); // x, y, w,y
-      doc.text('Approved by:', 25, 229)
-
-      // css
-      doc.text('Remarks:', 150, 200)
-      doc.line(145, 225, 195, 225); // x, y, w, y
-      doc.text('Approved by:', 160, 229)
-
-      // doc.output('dataurlnewwindow', {}) // for testing
-      doc.save('rush form request.pdf')
-    }
-
   },
   filters: {
     upperCase: function (value) {
