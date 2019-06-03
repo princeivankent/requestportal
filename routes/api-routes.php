@@ -14,3 +14,6 @@ Route::group(['middleware' => ['api_token']], function () {
     // 
     Route::get('approvers/{employee_id}', 'ApproversController@get_approvers');
 });
+
+// 
+Route::get('generate-pdf', 'PDFController@generate');

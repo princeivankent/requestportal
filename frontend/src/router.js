@@ -5,7 +5,9 @@ import { TokenService } from './services/storage.service'
 const Main     = () => import(/* webpackChunkName: "main" */ './layouts/Main')
 const Login    = () => import(/* webpackChunkName: "login" */ './views/auth/Login')
 const Register = () => import(/* webpackChunkName: "register" */ './views/auth/Register')
+
 const Home     = () => import(/* webpackChunkName: "home" */ './views/Home')
+const Request     = () => import(/* webpackChunkName: "request" */ './views/Request')
 
 Vue.use(VueRouter)
 
@@ -22,7 +24,8 @@ const router = new VueRouter({
         requiresAuth: true 
       },
       children: [
-        { path: 'home', component: Home }
+        { path: 'home', component: Home },
+        { path: 'your-requests', component: Request }
       ]
     },
     { 

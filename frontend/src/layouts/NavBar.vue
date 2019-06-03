@@ -14,15 +14,29 @@
               <div class="kt-header__brand-nav">
                 <div class="dropdown">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Dashboard
+                    {{ $route.fullPath === '/home' ? 'Dashboard' : 'Your Requests' }}
                   </button>
                   <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md">
                     <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-margin-t-20 kt-margin-b-20">
                       <li class="kt-nav__item">
-                        <a class="kt-nav__link active" href="#">
-                          <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
-                          <span class="kt-nav__link-text">Your Request</span>
-                        </a>
+                          <template v-if="$route.fullPath === '/home'">
+                            <router-link 
+                              to="/your-requests"
+                              class="kt-nav__link active"
+                            >
+                              <span class="kt-nav__link-icon"><i class="flaticon2-document"></i></span>
+                              <span class="kt-nav__link-text">Go to your Request</span>
+                            </router-link>
+                          </template>
+                          <template v-else-if="$route.fullPath === '/your-requests'">
+                            <router-link 
+                              to="/home"
+                              class="kt-nav__link active my-0"
+                            >
+                              <span class="kt-nav__link-icon"><i class="flaticon2-back"></i></span>
+                              <span class="kt-nav__link-text">back to dashboard</span>
+                            </router-link>
+                          </template>
                       </li>
                       <!-- <li class="kt-nav__item">
                         <a class="kt-nav__link" href="#">

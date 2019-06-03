@@ -166,13 +166,13 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        this.printPDF(this.paramEnricher())
+        window.open('http://localhost/requestportal/api/generate-pdf?formData=' + JSON.stringify(this.paramEnricher()));
         
         this.$notify({
           group: 'foo',
           type: 'success',
           title: 'System Alert',
-          text: 'Your request has been successfully submitted!',
+          text: 'Your request has been successfully submitted! \n Get you request form.',
           speed: 1000,
           duration: 5000
         })
@@ -186,11 +186,11 @@ export default {
 
       const newArray = []
       items.forEach((element, index) => {
-        newArray[index] = [
-          element.item.description, 
-          moment(element.target_date).format("MMMM D YYYY"),
-          element.item.item_approver_type.type
-        ]
+        newArray.push({
+          request_item: element.item.description,
+          target_date: moment(element.target_date).format("MMMM D, YYYY"),
+          approver_type: element.item.item_approver_type.type
+        })
       })
 
       const pdfParams = {
@@ -206,7 +206,6 @@ export default {
     },
 
     async printPDF (pdfParams) {
-      console.log(pdfParams)
       var doc = new jsPDF()
 
       doc.text("RUSH FORM", 12, 20)
