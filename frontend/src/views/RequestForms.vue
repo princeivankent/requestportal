@@ -54,12 +54,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr v-for="(item, index) in items" :key="index">
+                    <tr v-for="(item, index) in getEmployeeRequests.requested_items" :key="index">
                       <td>{{ index+1}}</td>
                       <td>{{ item.item.description }}</td>
-                      <td>{{ item.item.target_date }}</td>
+                      <td>{{ item.target_date | toDateString }}</td>
                       <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
-                    </tr> -->
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -74,9 +74,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import SubHeader from '../layouts/SubHeader'
+import moment from 'moment'
 
 export default {
-  name: 'Request',
+  name: 'RequestForms',
   components: {SubHeader},
   data () {
     return {
@@ -84,17 +85,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('request', [
-      'getAllItems', 'getAllApprovers', 'searchActiveStatus'
-    ]),
+    ...mapGetters('requestForms', ['getEmployeeRequests']),
 
     employeeId () {
       return this.$store.getters['login/userDetails'].employee_id
     }
   },
   watch: {
-    active_search (value) {
-      
+    active_search: {
+      handler: 'fetchEmployeeRequests',
+      immediate: true
+    }
+  },
+  methods: {
+    fetchEmployeeRequests (value) {
+      this.$store.dispatch('requestForms/setDefaultItemsAction', {employee_id: this.employeeId})
     }
   },
   filters: {
@@ -103,6 +108,9 @@ export default {
       value = value.toString()
       var str = value.replace('_', ' ')
       return str.charAt(0).toUpperCase() + str.slice(1)
+    },
+    toDateString (value) {
+      return moment(value).format("MMMM D, YYYY")
     }
   }
 }

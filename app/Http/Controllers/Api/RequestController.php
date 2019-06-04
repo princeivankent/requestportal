@@ -30,7 +30,7 @@ class RequestController extends Controller
         $query = RequestModel::with('requested_items.item.item_approver_type')
             ->whereCreatedBy($employee_id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->first();
 
         return response()->json($query);
     }
