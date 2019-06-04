@@ -92,7 +92,7 @@
       padding-top: 12px;
       padding-bottom: 12px;
       text-align: left;
-      background-color: #4CAF50;
+      background-color: #7F7F7F;
       color: white;
     }
   </style>
@@ -205,7 +205,7 @@
         </td>
       </tr>
       <tr>
-        <td style="height: 70px;"></td>
+        <td style="height: 20px;"></td>
       </tr>
       <tr>
         <td>
@@ -228,55 +228,84 @@
     </table>
   </div>
 
-  <br><br>
+  <br>
   <hr style="margin: 0 15px; width: 100%;">
   <br>
 
-  @if ($hasAcct && $hasCss)
+  {{-- @if ($hasAcct && $hasCss) --}}
     <div class="form-remarks">
-      <table width="100%">
+      <table width="100%" border="0">
         <tr>
-          <td>
-            <strong>
-              For Accounting Section Use
-            </strong>
+          <td  style="width:50%;">
+             <table>
+               <tr>
+                  <td>
+                    <strong>
+                      {{ $hasAcct ? 'For Accounting Section Use' : '' }}
+                    </strong>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                    {{ $hasAcct ? 'Remarks:' : '' }}
+                  </td>
+               </tr>
+                <tr>
+                  <td>
+                    <td style="height: 20px;"></td>
+                  </td>
+               </tr>
+                 <tr>
+                  <td>
+                    @if ($hasAcct)
+                      <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
+                    @endif
+                  </td>
+               </tr>
+                <tr>
+                  <td>
+                     {{ $hasAcct ? 'Approved By:' : '' }}
+                  </td>
+               </tr>
+            </table>
           </td>
-          <td>
-            <strong>
-              For CSS Section Use
-            </strong>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Remarks:
-          </td>
-          <td>
-            Remarks:
-          </td>
-        </tr>
-        <tr>
-          <td style="height: 70px;"></td>
-        </tr>
-        <tr>
-          <td>
-            <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
-          </td>
-          <td>
-            <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Approved By:
-          </td>
-          <td>
-            Approved By:
+          <td style="width:50%;border-left: 1px solid #000;">
+             <table>
+               <tr>
+                  <td>
+                    <strong>
+                      {{ $hasCss ? 'For CSS Section Use' : '' }}
+                    </strong>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                    {{ $hasCss ? 'Remarks:' : '' }}
+                  </td>
+               </tr>
+                <tr>
+                  <td>
+                    <td style="height: 20px;"></td>
+                  </td>
+               </tr>
+                 <tr>
+                  <td>
+                    @if ($hasCss)
+                      <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
+                    @endif
+                  </td>
+               </tr>
+                <tr>
+                  <td>
+                     {{ $hasCss ? 'Approved By:' : '' }}
+                  </td>
+               </tr>
+            </table>
           </td>
         </tr>
       </table>
     </div>
-  @elseif ($hasAcct && !$hasCss)
+  {{-- @elseif ($hasAcct && !$hasCss)
     <div class="form-remarks">
       <table width="100%">
         <tr>
@@ -292,7 +321,7 @@
           </td>
         </tr>
         <tr>
-          <td style="height: 70px;"></td>
+          <td style="height: 20px;"></td>
         </tr>
         <tr>
           <td>
@@ -322,7 +351,7 @@
           </td>
         </tr>
         <tr>
-          <td style="height: 70px;"></td>
+          <td style="height: 20px;"></td>
         </tr>
         <tr>
           <td>
@@ -336,9 +365,9 @@
         </tr>
       </table>
     </div>
-  @endif
+  @endif --}}
 
-  <div class="information" style="position: absolute; bottom: 0;">
+  {{-- <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">
       <tr>
         <td align="left" style="width: 50%;">
@@ -349,6 +378,6 @@
         </td>
       </tr>
     </table>
-  </div>
+  </div> --}}
 </body>
 </html>
