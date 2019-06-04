@@ -30,6 +30,12 @@
             </div>
             <div class="kt-form">
               <div class="kt-portlet__body">
+                <div class="alert alert-danger" role="alert">
+                  <div class="alert-text">
+                    <i class="flaticon-warning-sign"></i>&nbsp;
+                    This page is under construction
+                  </div>
+                </div>
                 <!-- <notifications 
                   group="foo" 
                   position="bottom right" 
