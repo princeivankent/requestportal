@@ -1,10 +1,9 @@
-import { UserService, AuthenticationError } from '../services/user.service'
-import { TokenService } from '../services/storage.service'
-import JwtService from '../services/jwt.service'
-import router from '../router'
+import { UserService, AuthenticationError } from '../../services/user.service'
+import { TokenService } from '../../services/storage.service'
+import JwtService from '../../services/jwt.service'
+import router from '../../router'
 
 const login = {
-  namespaced: true,
   state: {
     authenticating: false,
     isSessionExpires: false,

@@ -3,8 +3,6 @@ import ItemService from '../../services/modules/item.service'
 import ApproverService from '../../services/modules/approver.service';
 
 const request = {
-  namespaced: true,
-
   state: {
     submission: false,
     submissionError: {},

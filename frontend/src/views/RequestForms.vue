@@ -57,26 +57,11 @@
                     <!-- <tr v-for="(item, index) in items" :key="index">
                       <td>{{ index+1}}</td>
                       <td>{{ item.item.description }}</td>
-                      <td>
-                        <datepicker 
-                          @input="targetDateForm(index, $event)"
-                          :value="item.target_date"
-                          :calendar-button="true"
-                          :bootstrap-styling="true"
-                          :clear-button="searchActiveStatus ? false : true"
-                          format="MMM dd yyyy"
-                          calendar-button-icon="la la-calendar-check-o"
-                          placeholder="Select date" 
-                          readonly
-                          :disabled="searchActiveStatus"
-                        ></datepicker>
-                      </td>
+                      <td>{{ item.item.target_date }}</td>
                       <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
                     </tr> -->
                   </tbody>
                 </table>
-
-                <RequestForm />
               </div>
             </div>
           </div>
@@ -87,10 +72,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SubHeader from '../layouts/SubHeader'
 
 export default {
   name: 'Request',
-  components: {SubHeader}
+  components: {SubHeader},
+  data () {
+    return {
+      active_search: ''
+    }
+  },
+  computed: {
+    ...mapGetters('request', [
+      'getAllItems', 'getAllApprovers', 'searchActiveStatus'
+    ]),
+
+    employeeId () {
+      return this.$store.getters['login/userDetails'].employee_id
+    }
+  },
+  watch: {
+    active_search (value) {
+      
+    }
+  },
+  filters: {
+    upperCase: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      var str = value.replace('_', ' ')
+      return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+  }
 }
 </script>

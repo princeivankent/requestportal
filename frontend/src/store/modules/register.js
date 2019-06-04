@@ -1,7 +1,6 @@
-import { UserService, RegistrationError } from '../services/user.service'
+import { UserService, RegistrationError } from '../../services/user.service'
 
 const register = {
-  namespaced: true,
   state: {
     isRegistered: false,
     registrationErrorCode: 0,

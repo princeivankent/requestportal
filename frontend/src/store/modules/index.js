@@ -1,7 +1,3 @@
-/**
- * Dynamic Module Loader
- */
-
 import camelCase from 'lodash/camelCase';
 
 const requireModule = require.context(".", false, /\.js$/);
@@ -13,7 +9,10 @@ requireModule.keys().forEach(fileName => {
 
   const moduleName = camelCase(fileName.replace(/(\.\/|\.js)/g, ""));
 
-  modules[moduleName] = requireModule(fileName).default;
+  modules[moduleName] = {
+    namespaced: true,
+    ...requireModule(fileName).default
+  }
 });
 
 export default modules;
