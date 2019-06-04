@@ -27,7 +27,7 @@ CREATE TABLE `api_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `api_tokens` */
 
@@ -62,15 +62,16 @@ CREATE TABLE `items` (
   PRIMARY KEY (`id`),
   KEY `fk.item_approver_type_id` (`item_approver_type_id`),
   CONSTRAINT `fk.item_approver_type_id` FOREIGN KEY (`item_approver_type_id`) REFERENCES `item_approver_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `items` */
 
 insert  into `items`(`id`,`description`,`item_approver_type_id`,`created_at`,`updated_at`) values 
-(1,'Request for urgent release of cash advance/request for payment',1,NULL,NULL),
-(2,'Request for urgent hotel booking',2,NULL,NULL),
+(1,'Request for urgent release of cash advance',1,NULL,NULL),
+(2,'Request for urgent release of payment',1,NULL,NULL),
 (3,'Request for urgent airline booking',2,NULL,NULL),
-(4,'Request for urgent vehicle reservation',2,NULL,NULL);
+(4,'Request for urgent vehicle reservation',2,NULL,NULL),
+(5,'Request for urgent hotel booking',2,NULL,NULL);
 
 /*Table structure for table `migrations` */
 
@@ -108,7 +109,7 @@ CREATE TABLE `request_items` (
   KEY `fk.item_id` (`item_id`),
   CONSTRAINT `fk.item_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk.request_id` FOREIGN KEY (`request_id`) REFERENCES `requests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `request_items` */
 
@@ -125,7 +126,7 @@ CREATE TABLE `requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `requests` */
 

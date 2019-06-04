@@ -6,10 +6,6 @@ import ApiService from './services/api.service'
 import { TokenService } from './services/storage.service'
 import Notifications from 'vue-notification'
 
-// import '../public/assets/vendor.bundle.js'
-// import '../public/assets/scripts.bundle.min.js'
-// import '../public/assets/app.bundle.min.js'
-
 Vue.use(Notifications)
 ApiService.init(process.env.VUE_APP_URL)
 
