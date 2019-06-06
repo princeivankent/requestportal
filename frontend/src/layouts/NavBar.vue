@@ -762,7 +762,7 @@
 
                   <!--begin: Navigation -->
                   <div class="kt-notification">
-                    <a href="#" class="kt-notification__item">
+                    <!-- <a href="#" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-calendar-3 kt-font-success"></i>
                       </div>
@@ -774,7 +774,7 @@
                           Account settings and more
                         </div>
                       </div>
-                    </a>
+                    </a> -->
                     <!-- <a href="#" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-mail kt-font-warning"></i>
@@ -818,9 +818,10 @@
                       <button 
                         @click="logout"
                         target="_blank" 
-                        class="btn btn-label-brand btn-sm btn-bold"
+                        class="btn btn-label-danger btn-sm btn-bold"
                       >
-                      Sign Out
+                        Back to IPC Centralized Portal &nbsp;
+                        <i class="fa fa-arrow-alt-circle-right"></i>
                       </button>
                     </div>
                   </div>
