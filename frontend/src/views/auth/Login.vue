@@ -1,6 +1,7 @@
 <template>
   <div>
     <UiLoader
+      v-if="!loginUsingIPC"
       :state="$store.state.login.authenticating"
       msg="Please wait, while authenticating..."
     >
@@ -9,10 +10,15 @@
     <div class="container-fluid mt-5">
       <div class="row justify-content-md-center">
         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3 col-xl-3">
-          <!-- <template v-if="$store.state.login.authenticating">
-            <h4>Please wait, while authenticating ...</h4>
-          </template> -->
-          <template>
+          <template v-if="loginUsingIPC">
+            <div class="alert alert-success" role="alert">
+              <div class="alert-text">
+                <i class="fa fa-sync fa-spin"></i>&nbsp;
+                Please wait while <strong>authenticating...</strong>
+              </div>
+            </div>
+          </template>
+          <template v-else>
             <h3 class="text-center mb-4">Login</h3>
             <form @submit.prevent="login" novalidate>
               <div class="form-group">
@@ -73,16 +79,41 @@ export default {
       form: {
         employee_number: '',
         password: ''
-      }
+      },
+      loginUsingIPC: true
     }
   },
   computed: mapState('login', ['authenticationError']),
+  created () {
+    this.initializedLogin()
+  },
   methods: {
-    login () {
+    login (emp_no, password) {
       this.$store.dispatch('login/login', {
-        employee_number: this.form.employee_number, 
-        password: this.form.password
+        employee_number: emp_no ? emp_no : this.form.employee_number, 
+        password: password ? password : this.form.password
       })
+    },
+
+    /**
+     * -------------------------
+     * Auto Login User
+     * -------------------------
+     * 
+     * Should direct on URL 
+     * http://${domain}/ipc_rushform/login?emp_no=${employee_number}&password=${password}
+     * from IPC Centralized Portal
+     */
+    initializedLogin () {
+      const { emp_no, password } = this.getUrlParams()
+
+      if (emp_no && password) {
+        this.loginUsingIPC = true
+        this.login(emp_no,password)
+      }
+      else {
+        this.loginUsingIPC = false
+      }
     },
 
     // Get Current url parameters

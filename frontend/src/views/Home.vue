@@ -105,8 +105,7 @@ import SubHeader from '../layouts/SubHeader'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import RequestForm from '@/components/RequestForm'
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { upperCase } from '../helpers/stringHelper'
 
 export default {
   name: 'Home',
@@ -163,7 +162,7 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open('http://localhost/requestportal/api/generate-pdf?formData=' + JSON.stringify(this.paramEnricher()));
+        window.open(`http://localhost/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`);
         
         this.$notify({
           group: 'foo',
@@ -182,7 +181,7 @@ export default {
       const items = this.$store.state.request.items.requested_items.filter(item => item.target_date)
 
       const newArray = []
-      items.forEach((element, index) => {
+      items.forEach((element) => {
         newArray.push({
           request_item: element.item.description,
           target_date: moment(element.target_date).format("MMMM D, YYYY"),
@@ -194,7 +193,7 @@ export default {
         requesting_department: this.$store.getters['login/userDetails']['department'],
         submission_date: moment().format("MMMM D YYYY"),
         items: newArray,
-        justification: this.$store.state.request.items.justification,
+        justification: upperCase(this.$store.state.request.items.justification),
         prepared_by: this.$store.getters['login/userDetails']['name'],
         approved_by: approvers.find(item => item.employee_id === approver_id)['name']
       }

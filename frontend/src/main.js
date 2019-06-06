@@ -5,6 +5,7 @@ import store from './store/index'
 import ApiService from './services/api.service'
 import { TokenService } from './services/storage.service'
 import Notifications from 'vue-notification'
+import './helpers/filters'
 
 Vue.use(Notifications)
 ApiService.init(process.env.VUE_APP_URL)

@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.2 (64 bit)
-MySQL - 5.7.24 : Database - requestportal
+MySQL - 5.7.24 : Database - ipc_rushform
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.7.24 : Database - requestportal
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`requestportal` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`ipc_rushform` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 /*Table structure for table `api_tokens` */
 

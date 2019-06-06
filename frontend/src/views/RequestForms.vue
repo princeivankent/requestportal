@@ -36,6 +36,7 @@
                     This page is under construction
                   </div>
                 </div>
+
                 <!-- <notifications 
                   group="foo" 
                   position="bottom right" 
@@ -54,17 +55,17 @@
                   <thead>
                     <tr>
                       <th><i class="fa fa-hashtag"></i></th>
-                      <th>Request Item</th>
-                      <th>Target Date of releasing</th>
-                      <th>Approver</th>
+                      <th>Request Code</th>
+                      <th>Date Created</th>
+                      <th>Justification</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in getEmployeeRequests.requested_items" :key="index">
+                    <tr v-for="(item, index) in getEmployeeRequests" :key="index">
                       <td>{{ index+1}}</td>
-                      <td>{{ item.item.description }}</td>
-                      <td>{{ item.target_date | toDateString }}</td>
-                      <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
+                      <td>{{ item.request_code }}</td>
+                      <td>{{ item.created_at | toDateString }}</td>
+                      <td>{{ item.justification }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -104,19 +105,8 @@ export default {
     }
   },
   methods: {
-    fetchEmployeeRequests (value) {
+    fetchEmployeeRequests () {
       this.$store.dispatch('requestForms/setDefaultItemsAction', {employee_id: this.employeeId})
-    }
-  },
-  filters: {
-    upperCase: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      var str = value.replace('_', ' ')
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    },
-    toDateString (value) {
-      return moment(value).format("MMMM D, YYYY")
     }
   }
 }

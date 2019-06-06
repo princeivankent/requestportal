@@ -13,7 +13,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  base: 'requestportal',
+  base: process.env.VUE_APP_NAME,
   routes: [
     { path: '*', redirect: '/home' },
     { path: '/', redirect: '/home'},

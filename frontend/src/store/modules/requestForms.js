@@ -2,7 +2,7 @@ import EmployeeRequestService from '../../services/modules/employee-request.serv
 
 const requestForms = {
   state: {
-    items: {}
+    items: []
   },
 
   getters: {
