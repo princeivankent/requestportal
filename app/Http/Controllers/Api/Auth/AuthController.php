@@ -9,9 +9,17 @@ use App\Models\Employee;
 use App\Services\Jwt;
 use App\Services\UserRole;
 use Carbon\Carbon;
+use App\Helpers\Password;
 
 class AuthController extends Controller
 {
+    protected $password;
+
+    public function __construct(Password $password)
+    {
+        $this->password = $password;    
+    }
+
     public function login(
         Request $request, 
         Jwt $jwt, 
@@ -25,7 +33,7 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $query = $employee->get_user($request->employee_number, $request->password);
+        $query = $employee->get_user($request->employee_number, $this->password->decrypt($request->password));
 
         if (!$query) 
             return response()->json([

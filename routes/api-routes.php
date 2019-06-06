@@ -18,3 +18,5 @@ Route::group(['middleware' => ['api_token']], function () {
 
 // 
 Route::get('generate-pdf', 'PDFController@generate');
+Route::post('encrypt-password', 'PasswordController@encrypt');
+Route::post('decrypt-password', 'PasswordController@decrypt');

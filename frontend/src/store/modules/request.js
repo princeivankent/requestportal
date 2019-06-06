@@ -64,6 +64,7 @@ const request = {
     SET_JUSTIFICATION (state, justification) {
       state.submissionError.justification = ''
       state.items.justification = justification
+      console.log(justification)
     },
 
     SET_APPROVERS (state, approvers) {
