@@ -25,12 +25,12 @@ class RequestController extends Controller
         return response()->json($query->get());
     }
 
-    public function getRequestByEmployeeId($employee_id)
+    public function getRequestsByEmployeeId($employee_id)
     {
         $query = RequestModel::with('requested_items.item.item_approver_type')
             ->whereCreatedBy($employee_id)
             ->orderBy('created_at', 'desc')
-            ->first();
+            ->get();
 
         return response()->json($query);
     }
