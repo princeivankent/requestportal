@@ -20,7 +20,14 @@
           </template>
           <template v-else>
             <h3 class="text-center mb-4">Login</h3>
-            <form @submit.prevent="login" novalidate>
+            <div class="alert alert-warning" role="alert">
+              <div class="alert-text">
+                <i class="fa fa-exclamation-circle"></i>&nbsp;
+                Something went wrong<br>
+                Please use manual login. Thank you!
+              </div>
+            </div>
+            <form @submit.prevent="manualLogin" novalidate>
               <div class="form-group">
                 <label>Employee Number</label>
                 <input 
@@ -88,10 +95,17 @@ export default {
     this.initializedLogin()
   },
   methods: {
-    login (emp_no, password) {
+    autoLogin (emp_no, password) {
       this.$store.dispatch('login/login', {
-        employee_number: emp_no ? emp_no : this.form.employee_number, 
-        password: password ? password : this.form.password
+        employee_number: emp_no, 
+        password: password
+      })
+    },
+
+    manualLogin () {
+      this.$store.dispatch('login/login', {
+        employee_number: this.form.employee_number, 
+        password: this.form.password
       })
     },
 
@@ -109,7 +123,7 @@ export default {
 
       if (emp_no && password) {
         this.loginUsingIPC = true
-        this.login(emp_no,password)
+        this.autoLogin(emp_no,password)
       }
       else {
         this.loginUsingIPC = false

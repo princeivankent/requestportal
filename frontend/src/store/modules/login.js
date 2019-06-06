@@ -93,7 +93,8 @@ const login = {
       await UserService.logout()
       commit('logoutSuccess')
       
-      router.push('login')
+      // router.push('login')
+      window.location = `http://${window.location.hostname}/ipc_central`
     },
 
     unAuthorized ({ commit }, message) {
