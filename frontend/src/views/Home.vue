@@ -105,8 +105,6 @@ import SubHeader from '../layouts/SubHeader'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import RequestForm from '@/components/RequestForm'
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 export default {
   name: 'Home',
@@ -163,7 +161,7 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open('http://localhost/requestportal/api/generate-pdf?formData=' + JSON.stringify(this.paramEnricher()));
+        window.open('http://localhost/rushform/api/generate-pdf?formData=' + JSON.stringify(this.paramEnricher()));
         
         this.$notify({
           group: 'foo',
@@ -182,7 +180,7 @@ export default {
       const items = this.$store.state.request.items.requested_items.filter(item => item.target_date)
 
       const newArray = []
-      items.forEach((element, index) => {
+      items.forEach((element) => {
         newArray.push({
           request_item: element.item.description,
           target_date: moment(element.target_date).format("MMMM D, YYYY"),

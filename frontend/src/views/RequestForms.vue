@@ -104,7 +104,7 @@ export default {
     }
   },
   methods: {
-    fetchEmployeeRequests (value) {
+    fetchEmployeeRequests () {
       this.$store.dispatch('requestForms/setDefaultItemsAction', {employee_id: this.employeeId})
     }
   },
