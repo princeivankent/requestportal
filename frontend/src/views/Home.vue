@@ -105,6 +105,7 @@ import SubHeader from '../layouts/SubHeader'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import RequestForm from '@/components/RequestForm'
+import { upperCase } from '../helpers/stringHelper'
 
 export default {
   name: 'Home',
@@ -161,7 +162,7 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open('http://localhost/rushform/api/generate-pdf?formData=' + JSON.stringify(this.paramEnricher()));
+        window.open(`http://localhost/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`);
         
         this.$notify({
           group: 'foo',
@@ -192,7 +193,7 @@ export default {
         requesting_department: this.$store.getters['login/userDetails']['department'],
         submission_date: moment().format("MMMM D YYYY"),
         items: newArray,
-        justification: this.$store.state.request.items.justification,
+        justification: upperCase(this.$store.state.request.items.justification),
         prepared_by: this.$store.getters['login/userDetails']['name'],
         approved_by: approvers.find(item => item.employee_id === approver_id)['name']
       }
