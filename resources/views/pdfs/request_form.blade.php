@@ -252,7 +252,7 @@
                </tr>
                 <tr>
                   <td>
-                    <td style="height: 20px;"></td>
+                    <td style="height: 40px;"></td>
                   </td>
                </tr>
                  <tr>
@@ -285,7 +285,7 @@
                </tr>
                 <tr>
                   <td>
-                    <td style="height: 20px;"></td>
+                    <td style="height: 40px;"></td>
                   </td>
                </tr>
                  <tr>
