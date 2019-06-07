@@ -57,8 +57,7 @@ export default {
         return this.$store.state.request.items.justification
       },
       set (value) {
-        console.log(value)
-        // return this.$store.commit('request/SET_JUSTIFICATION', value)
+        return this.$store.commit('request/SET_JUSTIFICATION', value)
       }
     },
 
