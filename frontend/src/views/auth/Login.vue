@@ -91,7 +91,7 @@ export default {
     }
   },
   computed: mapState('login', ['authenticationError']),
-  created () {
+  mounted () {
     this.initializedLogin()
   },
   methods: {
@@ -121,13 +121,16 @@ export default {
     initializedLogin () {
       const { emp_no, password } = this.getUrlParams()
 
-      if (emp_no && password) {
-        this.loginUsingIPC = true
-        this.autoLogin(emp_no,password)
-      }
-      else {
-        this.loginUsingIPC = false
-      }
+      this.loginUsingIPC = true
+      this.autoLogin(emp_no,password)
+
+      // if (emp_no && password) {
+      //   this.loginUsingIPC = true
+      //   this.autoLogin(emp_no,password)
+      // }
+      // else {
+      //   this.loginUsingIPC = false
+      // }
     },
 
     // Get Current url parameters
