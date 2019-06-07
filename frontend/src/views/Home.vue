@@ -173,7 +173,7 @@ export default {
           duration: 5000
         })
         
-        location.reload();
+        // location.reload();
       }
     },
 
