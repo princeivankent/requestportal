@@ -172,6 +172,8 @@ export default {
           speed: 1000,
           duration: 5000
         })
+        
+        location.reload();
       }
     },
 
