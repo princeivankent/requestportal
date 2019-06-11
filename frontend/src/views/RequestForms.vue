@@ -30,46 +30,42 @@
             </div>
             <div class="kt-form">
               <div class="kt-portlet__body">
-                <div class="alert alert-danger" role="alert">
+                <!-- <div class="alert alert-danger" role="alert">
                   <div class="alert-text">
                     <i class="flaticon-warning-sign"></i>&nbsp;
                     This page is under construction
-                  </div>
-                </div>
-
-                <!-- <notifications 
-                  group="foo" 
-                  position="bottom right" 
-                /> -->
-                <!-- <div 
-                  v-if="itemErrors.length > 0"
-                  class="alert alert-danger" 
-                  role="alert"
-                >
-                  <div class="alert-text">
-                    <i class="flaticon-warning-sign"></i>&nbsp;
-                    Please select atleast one (1) item to request.
                   </div>
                 </div> -->
                 <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
                   <thead>
                     <tr>
-                      <th><i class="fa fa-hashtag"></i></th>
-                      <th>Request Code</th>
-                      <th>Date Created</th>
+                      <th class="text-center"><i class="fa fa-hashtag"></i></th>
+                      <th class="text-center" width="150">Request Code</th>
+                      <th class="text-center">Date Created</th>
                       <th>Justification</th>
+                      <th class="text-center" width="50"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in getEmployeeRequests" :key="index">
-                      <td>{{ index+1}}</td>
-                      <td>{{ item.request_code }}</td>
-                      <td>{{ item.created_at | toDateString }}</td>
+                      <td class="text-center">{{ index+1}}</td>
+                      <td class="text-center">{{ item.request_code }}</td>
+                      <td class="text-center">{{ item.created_at | toDateString }}</td>
                       <td>{{ item.justification }}</td>
+                      <td nowrap>
+                        <button 
+                          type="button" 
+                          class="btn btn-sm btn-warning btn-icon"
+                          @click="openRequest(item.request_code)"
+                        >
+                          <i class="fa fa-folder-open text-white"></i>
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+              <RequestFormModal />
             </div>
           </div>
         </div>
@@ -81,18 +77,20 @@
 <script>
 import { mapGetters } from 'vuex'
 import SubHeader from '../layouts/SubHeader'
-import moment from 'moment'
+import RequestFormModal from '../components/RequestFormModal'
 
 export default {
   name: 'RequestForms',
-  components: {SubHeader},
+  components: {
+    SubHeader, RequestFormModal
+  },
   data () {
     return {
       active_search: ''
     }
   },
   computed: {
-    ...mapGetters('requestForms', ['getEmployeeRequests']),
+    ...mapGetters('requestForm', ['getEmployeeRequests']),
 
     employeeId () {
       return this.$store.getters['login/userDetails'].employee_id
@@ -104,9 +102,21 @@ export default {
       immediate: true
     }
   },
+  created () {
+    this.$store.dispatch('requestForm/setApproversAction', this.$store.getters['login/userDetails'].employee_id)
+  },
   methods: {
     fetchEmployeeRequests () {
-      this.$store.dispatch('requestForms/setDefaultItemsAction', {employee_id: this.employeeId})
+      this.$store.dispatch('requestForm/setDefaultItemsAction', {employee_id: this.employeeId})
+    },
+
+    async openRequest (request_code) {
+      const data = {
+        request_code: request_code, requests: this.getEmployeeRequests
+      }
+      const request = await this.$store.dispatch('requestForm/setRequestbyCodeAction', data)
+
+      if (request) this.$store.dispatch('requestForm/setModalStateAction', true)
     }
   }
 }
