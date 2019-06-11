@@ -19,7 +19,7 @@
       <label for="exampleSelect1">Select Approver</label>
       <select 
         v-model="approverId"
-        :class="`form-control col-md-6 ${$store.state.request.submissionError.approver_id ? 'is-invalid' : ''}`" 
+        :class="`form-control col-md-6 ${!$store.state.request.submissionError.approver_id ? '' : 'is-invalid'}`" 
         id="exampleSelect1"
         :disabled="searchActiveStatus"
       >
@@ -66,7 +66,7 @@ export default {
         return this.$store.state.request.items.approver_id
       },
       set (value) {
-        return this.$store.commit('request/SET_APPROVER_ID', value)
+        return this.$store.commit('request/SET_APPROVER_ID', parseInt(value))
       }
     }
   }
