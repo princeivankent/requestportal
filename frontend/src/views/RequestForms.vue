@@ -30,40 +30,36 @@
             </div>
             <div class="kt-form">
               <div class="kt-portlet__body">
-                <!-- <div class="alert alert-danger" role="alert">
-                  <div class="alert-text">
-                    <i class="flaticon-warning-sign"></i>&nbsp;
-                    This page is under construction
-                  </div>
-                </div> -->
-                <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
-                  <thead>
-                    <tr>
-                      <th class="text-center"><i class="fa fa-hashtag"></i></th>
-                      <th class="text-center" width="150">Request Code</th>
-                      <th class="text-center">Date Created</th>
-                      <th>Justification</th>
-                      <th class="text-center" width="50"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in getEmployeeRequests" :key="index">
-                      <td class="text-center">{{ index+1}}</td>
-                      <td class="text-center">{{ item.request_code }}</td>
-                      <td class="text-center">{{ item.created_at | toDateString }}</td>
-                      <td>{{ item.justification }}</td>
-                      <td nowrap>
-                        <button 
-                          type="button" 
-                          class="btn btn-sm btn-warning btn-icon"
-                          @click="openRequest(item.request_code)"
-                        >
-                          <i class="fa fa-folder-open text-white"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <UiLoader :loadingState="getLoadingState">
+                  <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
+                    <thead>
+                      <tr>
+                        <th class="text-center"><i class="fa fa-hashtag"></i></th>
+                        <th class="text-center" width="150">Request Code</th>
+                        <th class="text-center">Date Created</th>
+                        <th>Justification</th>
+                        <th class="text-center" width="50"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, index) in getEmployeeRequests" :key="index">
+                        <td class="text-center">{{ index+1}}</td>
+                        <td class="text-center">{{ item.request_code }}</td>
+                        <td class="text-center">{{ item.created_at | toDateString }}</td>
+                        <td>{{ item.justification }}</td>
+                        <td nowrap>
+                          <button 
+                            type="button" 
+                            class="btn btn-sm btn-warning btn-icon"
+                            @click="openRequest(item.request_code)"
+                          >
+                            <i class="fa fa-folder-open text-white"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </UiLoader>
               </div>
               <RequestFormModal />
             </div>
@@ -78,11 +74,12 @@
 import { mapGetters } from 'vuex'
 import SubHeader from '../layouts/SubHeader'
 import RequestFormModal from '../components/RequestFormModal'
+import UiLoader from '../plugins/UiLoader'
 
 export default {
   name: 'RequestForms',
   components: {
-    SubHeader, RequestFormModal
+    SubHeader, RequestFormModal, UiLoader
   },
   data () {
     return {
@@ -90,7 +87,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('requestForm', ['getEmployeeRequests']),
+    ...mapGetters('requestForm', [
+      'getEmployeeRequests',
+      'getLoadingState'
+    ]),
 
     employeeId () {
       return this.$store.getters['login/userDetails'].employee_id

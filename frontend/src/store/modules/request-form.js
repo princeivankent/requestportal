@@ -6,17 +6,23 @@ const requestForm = {
     items: [],
     request_form: {},
     approvers: [],
-    modalState: false
+    modalState: false,
+    loadingState: false
   },
 
   getters: {
     getEmployeeRequests: (state) => state.items,
     getRequestForm: (state)  => state.request_form,
     getAllApprovers: (state) => state.approvers,
-    getModalState: (state) => state.modalState
+    getModalState: (state) => state.modalState,
+    getLoadingState: (state) => state.loadingState
   },
 
   mutations: {
+    SET_LOADER (state, payload) {
+      state.loadingState = payload
+    },
+
     SET_DEFAULT_ITEMS (state, payload) {
       state.items = payload.items
     },
@@ -39,9 +45,14 @@ const requestForm = {
   },
 
   actions: {
-    async setDefaultItemsAction ({commit}, payload) {
+    async setDefaultItemsAction ({commit, state}, payload) {
+      if (state.items.length == 0) {
+        commit('SET_LOADER', true)
+      }
+
       const result = await EmployeeRequestService.getAllEmployeeRequests(payload.employee_id)
       commit('SET_DEFAULT_ITEMS', {items: result})
+      commit('SET_LOADER', false)
     },
 
     async setRequestbyCodeAction ({commit}, payload) {
