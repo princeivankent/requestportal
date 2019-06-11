@@ -166,7 +166,7 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`);
+        window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`, '_blank');
 
         window.focus()
         
