@@ -167,6 +167,8 @@ export default {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
         window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`);
+
+        window.focus()
         
         this.$notify({
           group: 'foo',
@@ -176,8 +178,6 @@ export default {
           speed: 1000,
           duration: 5000
         })
-        
-        // location.reload();
       }
     },
 
