@@ -68,6 +68,7 @@
                           calendar-button-icon="la la-calendar-check-o"
                           placeholder="Select date" 
                           readonly
+                          :disabledDates="disabledDates"
                           :disabled="searchActiveStatus"
                         ></datepicker>
                       </td>
@@ -112,7 +113,10 @@ export default {
   components: {SubHeader,Datepicker,RequestForm},
   data () {
     return {
-      active_search: ''
+      active_search: '',
+      disabledDates: {
+        to: new Date(Date.now() - 8640000)
+      }
     }
   },
   computed: {
