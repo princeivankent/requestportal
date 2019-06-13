@@ -17,7 +17,7 @@
                     v-model="active_search"
                     type="text" 
                     class="form-control" 
-                    placeholder="Type Request Code"
+                    placeholder="Request Code (5 digits)"
                   />
                   <button 
                     type="button" 
@@ -44,39 +44,48 @@
                     Please select atleast one (1) item to request.
                   </div>
                 </div>
-                <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
-                  <thead>
-                    <tr>
-                      <th><i class="fa fa-hashtag"></i></th>
-                      <th>Request Item</th>
-                      <th>Target Date of releasing</th>
-                      <th>Approver</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in items" :key="index">
-                      <td>{{ index+1}}</td>
-                      <td>{{ item.item.description }}</td>
-                      <td>
-                        <datepicker 
-                          @input="targetDateForm(index, $event)"
-                          :value="item.target_date"
-                          :calendar-button="true"
-                          :bootstrap-styling="true"
-                          :clear-button="searchActiveStatus ? false : true"
-                          format="MMM dd yyyy"
-                          calendar-button-icon="la la-calendar-check-o"
-                          placeholder="Select date" 
-                          readonly
-                          :disabledDates="disabledDates"
-                          :disabled="searchActiveStatus"
-                        ></datepicker>
-                      </td>
-                      <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
+                <UiLoader :loadingState="getLoadingState">
+                  <table class="table table-striped table-bordered table-hover table-checkable" id="my-table">
+                    <thead>
+                      <tr>
+                        <th><i class="fa fa-hashtag"></i></th>
+                        <th>Request Item</th>
+                        <th>Target Date of releasing</th>
+                        <th>Approver</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-if="!items">
+                        <td colspan="5">
+                          <div class="alert-text text-center">
+                            <i class="fa fa-exclamation-triangle"></i>&nbsp;
+                            No Data found.
+                          </div>
+                        </td>
+                      </tr>
+                      <tr v-for="(item, index) in items" :key="index">
+                        <td>{{ index+1}}</td>
+                        <td>{{ item.item.description }}</td>
+                        <td>
+                          <datepicker 
+                            @input="targetDateForm(index, $event)"
+                            :value="item.target_date"
+                            :calendar-button="true"
+                            :bootstrap-styling="true"
+                            :clear-button="searchActiveStatus ? false : true"
+                            format="MMM dd yyyy"
+                            calendar-button-icon="la la-calendar-check-o"
+                            placeholder="Select date" 
+                            readonly
+                            :disabledDates="disabledDates"
+                            :disabled="searchActiveStatus"
+                          ></datepicker>
+                        </td>
+                        <td nowrap>{{ item.item.item_approver_type.type | upperCase }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </UiLoader>
                 <RequestForm />
               </div>
 
@@ -109,10 +118,16 @@ import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import RequestForm from '@/components/RequestForm'
 import { upperCase } from '../helpers/stringHelper'
+import UiLoader from '../plugins/UiLoader'
 
 export default {
   name: 'Home',
-  components: {SubHeader,Datepicker,RequestForm},
+  components: {
+    SubHeader,
+    Datepicker,
+    RequestForm,
+    UiLoader
+  },
   data () {
     return {
       active_search: '',
@@ -123,7 +138,7 @@ export default {
   },
   computed: {
     ...mapGetters('request', [
-      'getAllItems', 'getAllApprovers', 'searchActiveStatus'
+      'getAllItems', 'getAllApprovers', 'searchActiveStatus', 'getLoadingState'
     ]),
 
     employeeId () {
@@ -145,7 +160,7 @@ export default {
     active_search (value) {
       if (value.length === 5)
         this.$store.dispatch('request/getItems', value)
-      else
+      else if (value.length === 0)
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
     }
   },

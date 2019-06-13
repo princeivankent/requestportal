@@ -21,16 +21,22 @@ const request = {
       updated_at:"",
       requested_items:[]
     },
-    approvers: []
+    approvers: [],
+    loadingState: false
   },
 
   getters: {
     getAllItems: (state) => state.items,
     getAllApprovers: (state) => state.approvers,
-    searchActiveStatus: (state) => state.items.request_code ? true : false
+    searchActiveStatus: (state) => state.items.request_code ? true : false,
+    getLoadingState: (state) => state.loadingState
   },
 
   mutations: {
+    SET_LOADER (state, payload) {
+      state.loadingState = payload
+    },
+
     SUBMIT_LOADER (state) {
       state.submission = true
       state.submissionError = ''
@@ -105,14 +111,18 @@ const request = {
   actions: {
 
     async setDefaultItemsAction ({commit}, id) {
+      commit('SET_LOADER', true)
       const {data} = await ItemService.getAllItems()
       await commit('SET_DEFAULT_ITEMS', data)
+      await commit('SET_LOADER', false)
       return commit('SET_CREATED_BY', id)
     },
 
     async getItems ({commit}, request_code) {
       if (request_code) {
+        await commit('SET_LOADER', true)
         const {data} = await RequestService.getAllRequests(request_code)
+        await commit('SET_LOADER', false)
         return commit('STORE_ITEMS', data)
       }
 
