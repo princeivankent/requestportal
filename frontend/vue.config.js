@@ -1,4 +1,6 @@
 const webpack = require("webpack");
+const path = require('path');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 module.exports = {
   // Dynamic public path for dev/prod environment
@@ -38,6 +40,13 @@ module.exports = {
         $: 'jquery',
         moment: 'moment',
       }),
+
+      new PrerenderSPAPlugin({
+        // Required - The path to the webpack-outputted app to prerender.
+        staticDir: path.join(__dirname, '../public'),
+        // Required - Routes to render.
+        routes: [ '/login', '/home', '/your-requests' ],
+      })
     ]
   }
 }
