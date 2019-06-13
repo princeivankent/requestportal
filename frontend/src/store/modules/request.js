@@ -5,9 +5,22 @@ import ApproverService from '../../services/modules/approver.service';
 const request = {
   state: {
     submission: false,
-    submissionError: {},
+    submissionError: {
+      items:"",
+      approver_id:"",
+      justification:""
+    },
     submissionErrorCode: '',
-    items: {},
+    items: {
+      id:"",
+      request_code:"",
+      created_by:"",
+      approver_id:"",
+      justification:"",
+      created_at:"",
+      updated_at:"",
+      requested_items:[]
+    },
     approvers: []
   },
 
@@ -36,34 +49,52 @@ const request = {
 
     // -------------------------
     STORE_ITEMS (state, items) {
-      state.items = items
+      state.items = {
+        id: items.id,
+        request_code: items.request_code,
+        created_by: items.created_by,
+        approver_id: items.approver_id,
+        justification: items.justification,
+        created_at: items.created_at,
+        updated_at: items.update_at,
+        requested_items: items.requested_items
+      }
     },
 
     SET_DEFAULT_ITEMS (state, items) {
-      state.items = items
+      state.items = {
+        id: items.id,
+        request_code: items.request_code,
+        created_by: items.created_by,
+        approver_id: items.approver_id,
+        justification: items.justification,
+        created_at: items.created_at,
+        updated_at: items.update_at,
+        requested_items: items.requested_items
+      }
     },
 
     SET_TARGET_DATE (state, payload) {
-      state.submissionError.items = {}
-      state.items.requested_items[payload.index].target_date = payload.target_date
+      state.submissionError = { ...state.submissionError, items: {} }
+      state.items.requested_items[payload.index] = { ...state.items.requested_items[payload.index], target_date: payload.target_date }
     },
 
     SET_SELECT_ITEM (state, payload) {
-      state.items.requested_items[payload.index].id = payload.status
+      state.items.requested_items[payload.index] = { ...state.items.requested_items[payload.index], id: payload.status}
     },
 
     SET_APPROVER_ID (state, id) {
-      state.submissionError.approver_id = ''
-      state.items.approver_id = id
+      state.submissionError = { ...state.submissionError, approver_id: '' }
+      state.items = { ...state.items, approver_id: id }
     },
 
     SET_CREATED_BY (state, id) {
-      state.items.created_by = id
+      state.items = { ...state.items, created_by: id }
     },
 
     SET_JUSTIFICATION (state, justification) {
-      state.submissionError.justification = ''
-      state.items.justification = justification
+      state.submissionError = { ...state.submissionError, justification: '' }
+      state.items = { ...state.items, justification }
     },
 
     SET_APPROVERS (state, approvers) {

@@ -68,6 +68,7 @@
                           calendar-button-icon="la la-calendar-check-o"
                           placeholder="Select date" 
                           readonly
+                          :disabledDates="disabledDates"
                           :disabled="searchActiveStatus"
                         ></datepicker>
                       </td>
@@ -84,9 +85,11 @@
                   <button 
                     @click="onSubmitRequest()"
                     class="btn btn-brand"
-                    :disabled="searchActiveStatus"
+                    :disabled="searchActiveStatus || $store.state.request.submission"
                   >
-                    <i class="la la-check"></i>
+                    <i 
+                      :class="`fa ${$store.state.request.submission ? 'fa-sync fa-spin' : 'fa-check'}`"
+                    ></i>&nbsp;
                     Submit
                   </button>
                 </div>
@@ -112,7 +115,10 @@ export default {
   components: {SubHeader,Datepicker,RequestForm},
   data () {
     return {
-      active_search: ''
+      active_search: '',
+      disabledDates: {
+        to: new Date(Date.now() - 8640000)
+      }
     }
   },
   computed: {
@@ -162,7 +168,9 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`);
+        window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`, '_blank');
+
+        window.focus()
         
         this.$notify({
           group: 'foo',
@@ -172,8 +180,6 @@ export default {
           speed: 1000,
           duration: 5000
         })
-        
-        // location.reload();
       }
     },
 
@@ -197,7 +203,7 @@ export default {
         items: newArray,
         justification: upperCase(this.$store.state.request.items.justification),
         prepared_by: this.$store.getters['login/userDetails']['name'],
-        approved_by: approvers.find(item => item.employee_id === approver_id)['name']
+        approved_by: upperCase(approvers.find(item => item.employee_id === approver_id)['name'])
       }
 
       return pdfParams
