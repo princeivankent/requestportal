@@ -108,6 +108,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { upperCase } from '../helpers/stringHelper'
+import moment from 'moment'
 
 export default { 
   name: 'RequestFormModal',
