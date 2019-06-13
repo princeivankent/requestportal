@@ -123,14 +123,6 @@ export default {
 
       this.loginUsingIPC = true
       this.autoLogin(emp_no,password)
-
-      // if (emp_no && password) {
-      //   this.loginUsingIPC = true
-      //   this.autoLogin(emp_no,password)
-      // }
-      // else {
-      //   this.loginUsingIPC = false
-      // }
     },
 
     // Get Current url parameters

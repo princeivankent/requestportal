@@ -90,7 +90,13 @@
                 <i class="fa fa-times"></i>
                 Close
               </button>
-              <!-- <button class="btn btn-primary">Save changes</button> -->
+              <button 
+                class="btn text-white company-primary-color"
+                @click="pdfGenerator"
+              >
+                <i class="fa fa-file-pdf"></i>
+                Generate PDF
+              </button>
             </div>
           </div>
         </div>
@@ -101,6 +107,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { upperCase } from '../helpers/stringHelper'
 
 export default { 
   name: 'RequestFormModal',
@@ -112,6 +119,38 @@ export default {
 
     approver () {
       return this.getAllApprovers.find(item => item.employee_id === this.getRequestForm.approver_id)
+    }
+  },
+  methods: {
+    pdfGenerator () {
+      const newArray = []
+      this.getRequestForm.requested_items.forEach((element) => {
+        newArray.push({
+          request_item: element.item.description,
+          target_date: moment(element.target_date).format("MMMM D, YYYY"),
+          approver_type: element.item.item_approver_type.type
+        })
+      })
+
+      const pdfParams = {
+        requesting_department: this.$store.getters['login/userDetails']['department'],
+        submission_date: moment(this.getRequestForm.created_at).format("MMMM D YYYY"),
+        items: newArray,
+        justification: upperCase(this.getRequestForm.justification),
+        prepared_by: this.$store.getters['login/userDetails']['name'],
+        approved_by: upperCase(this.$store.state.requestForm.approvers.find(item => item.employee_id === this.getRequestForm.approver_id)['name'])
+      }
+
+      window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(pdfParams)}`, '_blank');
+
+      window.focus()
+    },
+
+    toUpperCase (value) {
+      if (!value) return ''
+      value = value.toString()
+      var str = value.replace('_', ' ')
+      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
 }

@@ -201,7 +201,7 @@ export default {
         items: newArray,
         justification: upperCase(this.$store.state.request.items.justification),
         prepared_by: this.$store.getters['login/userDetails']['name'],
-        approved_by: approvers.find(item => item.employee_id === approver_id)['name']
+        approved_by: upperCase(approvers.find(item => item.employee_id === approver_id)['name'])
       }
 
       return pdfParams
