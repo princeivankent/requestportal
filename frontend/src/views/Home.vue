@@ -85,9 +85,11 @@
                   <button 
                     @click="onSubmitRequest()"
                     class="btn btn-brand"
-                    :disabled="searchActiveStatus"
+                    :disabled="searchActiveStatus || $store.state.request.submission"
                   >
-                    <i class="la la-check"></i>
+                    <i 
+                      :class="`fa ${$store.state.request.submission ? 'fa-sync fa-spin' : 'fa-check'}`"
+                    ></i>&nbsp;
                     Submit
                   </button>
                 </div>
