@@ -42,6 +42,14 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr v-if="getEmployeeRequests.length <= 0">
+                        <td colspan="5">
+                          <div class="alert-text text-center">
+                            <i class="fa fa-exclamation-triangle"></i>&nbsp;
+                            No Requests yet.
+                          </div>
+                        </td>
+                      </tr>
                       <tr v-for="(item, index) in getEmployeeRequests" :key="index">
                         <td class="text-center">{{ index+1}}</td>
                         <td class="text-center">{{ item.request_code }}</td>

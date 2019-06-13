@@ -7,7 +7,7 @@
     >
       <div class="alert-text text-center">
         <i class="fa fa-sync fa-spin"></i>&nbsp;
-        Fetching data from the <strong>server</strong>...
+        Loading Data...
       </div>
     </div>
     <slot v-if="!loadingState" />
