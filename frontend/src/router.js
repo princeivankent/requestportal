@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { TokenService } from './services/storage.service'
+import { getUrlParams } from './helpers/url-params.service'
 
 const Main     = () => import(/* webpackChunkName: "main" */ './layouts/Main')
 const Login    = () => import(/* webpackChunkName: "login" */ './views/auth/Login')
@@ -51,13 +52,23 @@ router.beforeEach((to, from, next) => {
   const loggedIn = !!TokenService.getToken()
 
   if (forVisitors) {
-    if (loggedIn)
-      return
+    if (loggedIn) {
+      if (getUrlParams()) {
+        console.log('user has been relogged in')
+        TokenService.removeToken()
+        next({ path: '/login', params: { emp_no: getUrlParams.emp_no, password: getUrlParams.password }})
+      }
+      else {
+        next()
+      }
+    }
     else next()
   }
   else if (requiresAuth) {
-    if (!loggedIn)
-      next('/login')
+    if (!loggedIn) {
+      window.location = `http://${window.location.hostname}/ipc_central`
+      next();
+    }
     else next()
   }
 })
