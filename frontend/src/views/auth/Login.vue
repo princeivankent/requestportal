@@ -77,6 +77,7 @@
 import { mapState } from 'vuex'
 import AuthNavigation from './AuthNavigation'
 import UiLoader from '@/components/loaders/UiLoader'
+import { TokenService } from '../../services/storage.service'
 
 export default {
   name: 'login',
@@ -121,8 +122,13 @@ export default {
     initializedLogin () {
       const { emp_no, password } = this.getUrlParams()
 
-      this.loginUsingIPC = true
-      this.autoLogin(emp_no,password)
+      if (!emp_no && !password) {
+        window.location = `http://${window.location.hostname}/ipc_central`
+      }
+      else {
+        this.loginUsingIPC = true
+        this.autoLogin(emp_no,password)
+      }
     },
 
     // Get Current url parameters
