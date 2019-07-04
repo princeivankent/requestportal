@@ -12,20 +12,12 @@
                 </h3>
               </div>
               <div class="kt-portlet__head-toolbar">
-                <div class="btn-group">
-                  <input 
-                    v-model="active_search"
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Request Code (5 digits)"
-                  />
-                  <button 
-                    type="button" 
-                    class="btn btn-sm btn-brand pr-2"
-                  >
-                    <i class="la la-search"></i>
-                  </button>
-                </div>
+                <input 
+                  v-model="active_search"
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Type control number"
+                />
               </div>
             </div>
             <div class="kt-form">
@@ -117,7 +109,6 @@ import SubHeader from '../layouts/SubHeader'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import RequestForm from '@/components/RequestForm'
-import { upperCase } from '../helpers/stringHelper'
 import UiLoader from '../plugins/UiLoader'
 
 export default {
@@ -183,10 +174,6 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        // window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`, '_blank');
-
-        // window.focus()
-        
         this.$notify({
           group: 'success_notif',
           type: 'success',
@@ -196,40 +183,6 @@ export default {
           duration: 15000
         })
       }
-    },
-
-    paramEnricher () {
-      const approver_id = this.$store.state.request.items.approver_id
-      const approvers = this.$store.state.request.approvers
-      const items = this.$store.state.request.items.requested_items.filter(item => item.target_date)
-
-      const newArray = []
-      items.forEach((element) => {
-        newArray.push({
-          request_item: element.item.description,
-          target_date: moment(element.target_date).format("MMMM D, YYYY"),
-          approver_type: element.item.item_approver_type.type
-        })
-      })
-
-      const pdfParams = {
-        requesting_department: this.$store.getters['login/userDetails']['department'],
-        submission_date: moment().format("MMMM D YYYY"),
-        items: newArray,
-        justification: upperCase(this.$store.state.request.items.justification),
-        prepared_by: this.$store.getters['login/userDetails']['name'],
-        approved_by: upperCase(approvers.find(item => item.employee_id === approver_id)['name'])
-      }
-
-      return pdfParams
-    },
-  },
-  filters: {
-    upperCase: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      var str = value.replace('_', ' ')
-      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
 }

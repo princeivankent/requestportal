@@ -7,10 +7,11 @@ import { TokenService } from './services/storage.service'
 import Notifications from 'vue-notification'
 import './helpers/filters'
 import VueMeta from 'vue-meta'
+import { appUrl } from './helpers/url'
 
 Vue.use(VueMeta)
 Vue.use(Notifications)
-ApiService.init(process.env.VUE_APP_URL)
+ApiService.init(appUrl())
 
 // If token exists set header
 if (TokenService.getToken()) ApiService.setHeader()

@@ -1,15 +1,15 @@
 import ApiService from '../api.service'
 
 const EmployeeRequestService = {
-  resourceUrl: process.env.VUE_APP_URL + '/api/employee-requests',
+  resourceUrl: `/api/employee-requests`,
 
-  async getAllEmployeeRequests (employee_id, id) {
+  async getAllEmployeeRequests (employee_id, control_number) {
     let formRequests = []
-    if (!id) 
+    if (!control_number) 
       formRequests = await ApiService.get(`${this.resourceUrl}/${employee_id}`)
     else 
-      formRequests = await ApiService.get(`${this.resourceUrl}/${employee_id}/${id}`)
-      
+      formRequests = await ApiService.get(`${this.resourceUrl}/${employee_id}/${control_number}`)
+
     return formRequests.data
   }
 }

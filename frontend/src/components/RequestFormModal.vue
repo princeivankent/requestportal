@@ -107,8 +107,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { upperCase } from '../helpers/stringHelper'
-import moment from 'moment'
 import { output } from '../helpers/control-number'
 
 export default { 

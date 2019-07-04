@@ -19,10 +19,11 @@
             </div>
           </template> -->
           <h3 class="text-center mb-4">Login</h3>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-secondary" role="alert">
             <div class="alert-text">
               <i class="fa fa-exclamation-circle"></i>&nbsp;
-              Automatic login has been disabled. Please login your account manually. Thank you
+              Automatic login has been disabled.
+              Please login your account manually. Thank you
             </div>
           </div>
           <form @submit.prevent="login" novalidate>
