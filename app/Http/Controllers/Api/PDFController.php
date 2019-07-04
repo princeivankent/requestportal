@@ -14,7 +14,7 @@ class PDFController extends Controller
 {
     public function generate()
     {
-        $item = json_decode($_GET['formData']);
+        $control_number = $_GET['control_number'];
 
         $query = RequestModel::from('requests AS req')
             ->select(
@@ -37,7 +37,7 @@ class PDFController extends Controller
             ->leftJoin('ipc_central.personal_information_tab as approver', 'approver.employee_id', '=', 'req.approver_id')
             ->leftJoin('ipc_central.employee_masterfile_tab as emt', 'emt.id', '=', 'requestor.employee_id')
             ->leftJoin('ipc_central.department_tab as dept', 'dept.id', '=', 'emt.department_id')
-            ->where('req.id', $item->id)
+            ->where('req.id', $control_number)
             ->first();
 
         $items = $query['requested_items'];

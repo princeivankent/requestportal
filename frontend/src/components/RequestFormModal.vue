@@ -17,7 +17,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group form-group-first">
-                        <label>Request Code</label>
+                        <label>Control Number</label>
                         <input 
                           v-model="controlNumber"
                           type="text" 
@@ -129,35 +129,8 @@ export default {
   },
   methods: {
     pdfGenerator () {
-      const newArray = []
-      this.getRequestForm.requested_items.forEach((element) => {
-        newArray.push({
-          request_item: element.item.description,
-          target_date: moment(element.target_date).format("MMMM D, YYYY"),
-          approver_type: element.item.item_approver_type.type
-        })
-      })
-
-      const pdfParams = {
-        id: this.getRequestForm.id,
-        requesting_department: this.$store.getters['login/userDetails']['department'],
-        submission_date: moment(this.getRequestForm.created_at).format("MMMM D YYYY"),
-        items: newArray,
-        justification: upperCase(this.getRequestForm.justification),
-        prepared_by: this.$store.getters['login/userDetails']['name'],
-        approved_by: upperCase(this.$store.state.requestForm.approvers.find(item => item.employee_id === this.getRequestForm.approver_id)['name'])
-      }
-
-      window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(pdfParams)}`, '_blank');
-
+      window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?control_number=${this.getRequestForm.id}`, '_blank');
       window.focus()
-    },
-
-    toUpperCase (value) {
-      if (!value) return ''
-      value = value.toString()
-      var str = value.replace('_', ' ')
-      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
 }
