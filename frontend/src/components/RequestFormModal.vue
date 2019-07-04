@@ -19,7 +19,7 @@
                       <div class="form-group form-group-first">
                         <label>Request Code</label>
                         <input 
-                          v-model="getRequestForm.request_code"
+                          v-model="controlNumber"
                           type="text" 
                           class="form-control" 
                           readonly
@@ -109,6 +109,7 @@
 import { mapGetters } from 'vuex'
 import { upperCase } from '../helpers/stringHelper'
 import moment from 'moment'
+import { output } from '../helpers/control-number'
 
 export default { 
   name: 'RequestFormModal',
@@ -120,6 +121,10 @@ export default {
 
     approver () {
       return this.getAllApprovers.find(item => item.employee_id === this.getRequestForm.approver_id)
+    },
+
+    controlNumber () {
+      return output(this.getRequestForm.id)
     }
   },
   methods: {
@@ -134,6 +139,7 @@ export default {
       })
 
       const pdfParams = {
+        id: this.getRequestForm.id,
         requesting_department: this.$store.getters['login/userDetails']['department'],
         submission_date: moment(this.getRequestForm.created_at).format("MMMM D YYYY"),
         items: newArray,

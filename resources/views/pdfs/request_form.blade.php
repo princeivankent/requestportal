@@ -111,6 +111,10 @@
         <td style="padding-left: 15px;">
           <p style="margin-bottom: 5px;">Philippines Corporation</p>
         </td>
+        <td></td>
+        <td style="padding-left: 15px;">
+           <p style="margin-bottom: 5px; margin-left: 40px;">Control Number: {{ $data->control_number }}</p>
+        </td>
       </tr>
     </table>
   </div>
@@ -161,9 +165,9 @@
       <tbody>
         @foreach ($data->items as $item)
             <tr>
-              <td>{{ $item->request_item }}</td>
-              <td>{{ $item->target_date }}</td>
-              <td>{{ $item->approver_type }}</td>
+              <td>{{ $item['request_item'] }}</td>
+              <td>{{ $item['target_date'] }}</td>
+              <td>{{ $item['approver_type'] }}</td>
             </tr>
         @endforeach
       </tbody>
@@ -305,79 +309,10 @@
         </tr>
       </table>
     </div>
-  {{-- @elseif ($hasAcct && !$hasCss)
-    <div class="form-remarks">
-      <table width="100%">
-        <tr>
-          <td>
-            <strong>
-              For Accounting Section Use
-            </strong>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Remarks:
-          </td>
-        </tr>
-        <tr>
-          <td style="height: 20px;"></td>
-        </tr>
-        <tr>
-          <td>
-            <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Approved By:
-          </td>
-        </tr>
-      </table>
-    </div>
-  @elseif (!$hasAcct && $hasCss)
-    <div class="form-remarks">
-      <table width="100%">
-        <tr>
-          <td>
-            <strong>
-              For CSS Section Use
-            </strong>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Remarks:
-          </td>
-        </tr>
-        <tr>
-          <td style="height: 20px;"></td>
-        </tr>
-        <tr>
-          <td>
-            <hr style="width: 190px; text-align: left; margin-left: 0 margin-bottom: 0">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Approved By:
-          </td>
-        </tr>
-      </table>
-    </div>
-  @endif --}}
-
-  {{-- <div class="information" style="position: absolute; bottom: 0;">
-    <table width="100%">
-      <tr>
-        <td align="left" style="width: 50%;">
-          &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
-        </td>
-        <td align="right" style="width: 50%;">
-          Isuzu Philippines Corporation
-        </td>
-      </tr>
-    </table>
-  </div> --}}
+    <script>
+    function output (value) {
+      return String(value).padStart(5,0);
+    }
+    </script>
 </body>
 </html>

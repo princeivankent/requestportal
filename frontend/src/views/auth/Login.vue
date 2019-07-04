@@ -18,11 +18,13 @@
               </div>
             </div>
           </template> -->
-          <div class="alert alert-danger">
-            <i class="fa fa-warning"></i>&nbsp;
-            Sorry for inconvenience. This website is under construction, please try again after a few minutes
-          </div>
           <h3 class="text-center mb-4">Login</h3>
+          <div class="alert alert-success" role="alert">
+            <div class="alert-text">
+              <i class="fa fa-exclamation-circle"></i>&nbsp;
+              Automatic login has been disabled. Please login your account manually. Thank you
+            </div>
+          </div>
           <form @submit.prevent="login" novalidate>
             <div class="form-group">
               <label>Employee Number</label>

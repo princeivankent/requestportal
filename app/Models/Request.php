@@ -10,7 +10,7 @@ class Request extends Model
         'request_code', 'created_by', 'approver_id', 'justification'
     ];
 
-    public function requested_items()
+    public function requested_items ()
     {
         return $this->hasMany('App\Models\RequestItem');
     }
