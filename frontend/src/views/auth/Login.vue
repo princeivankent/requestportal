@@ -18,6 +18,10 @@
               </div>
             </div>
           </template> -->
+          <div class="alert alert-danger">
+            <i class="fa fa-warning"></i>&nbsp;
+            Sorry for inconvenience. This website is under construction, please try again after a few minutes
+          </div>
           <h3 class="text-center mb-4">Login</h3>
           <form @submit.prevent="login" novalidate>
             <div class="form-group">
