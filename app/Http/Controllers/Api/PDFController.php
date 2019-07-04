@@ -68,7 +68,7 @@ class PDFController extends Controller
             'hasCss'  => $hasCss,
             'hasAcct' => $hasAcct
         ]);
-
+      
         return $pdf->stream('request-form.pdf');
     }
 }
