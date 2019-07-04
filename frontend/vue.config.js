@@ -1,6 +1,5 @@
 const webpack = require("webpack");
 const path = require('path');
-const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 module.exports = {
   // Dynamic public path for dev/prod environment

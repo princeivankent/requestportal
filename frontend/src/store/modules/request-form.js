@@ -50,7 +50,7 @@ const requestForm = {
         commit('SET_LOADER', true)
       }
 
-      const result = await EmployeeRequestService.getAllEmployeeRequests(payload.employee_id, payload.id)
+      const result = await EmployeeRequestService.getAllEmployeeRequests(payload.employee_id, payload.control_number)
       commit('SET_DEFAULT_ITEMS', {items: result})
       commit('SET_LOADER', false)
     },

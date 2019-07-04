@@ -12,12 +12,12 @@ use Validator;
 
 class RequestController extends Controller
 {
-    public function get_requests($request_code = null)
+    public function get_requests($control_number = null)
     {
         $query = RequestModel::with('requested_items.item.item_approver_type');
 
-        if ($request_code) {
-            $query_id = $query->whereRequestCode($request_code)->first();
+        if ($control_number) {
+            $query_id = $query->whereId($control_number)->first();
 
             return response()->json($query_id);
         }
@@ -25,27 +25,16 @@ class RequestController extends Controller
         return response()->json($query->get());
     }
 
-    public function getRequestsByEmployeeId($employee_id)
+    public function getRequestsByEmployeeId($employee_id, $control_number = null)
     {
-        $query = RequestModel::with('requested_items.item.item_approver_type')
-            ->whereCreatedBy($employee_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = RequestModel::with('requested_items.item.item_approver_type');
 
-        return response()->json($query);
-    }
-
-    public function getRequestsByEmployeeIdandId($employee_id, $id)
-    {
-        $query = RequestModel::with('requested_items.item.item_approver_type')
-            ->where([
-                'created_by' => $employee_id,
-                'id' => $id
-            ])
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return response()->json($query);
+        if ($control_number)
+            $sub_query = $query->where(['id' => $control_number, 'created_by' => $employee_id]);
+        else
+            $sub_query = $query->whereCreatedBy($employee_id)->orderBy('created_at', 'desc');
+            
+        return response()->json($sub_query->get());
     }
 
     public function send_request(

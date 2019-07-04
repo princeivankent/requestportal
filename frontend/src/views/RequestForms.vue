@@ -109,7 +109,7 @@ export default {
     fetchEmployeeRequests (control_number) {
       this.$store.dispatch('requestForm/setDefaultItemsAction', {
         employee_id: this.employeeId,
-        id: control_number
+        control_number: control_number
       })
     },
 

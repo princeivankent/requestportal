@@ -10,10 +10,10 @@ class RequestError extends Error {
 }
 
 const RequestService = {
-  resourceUrl: process.env.VUE_APP_URL + '/api/requests',
+  resourceUrl: `/api/requests`,
 
-  async getAllRequests (request_code) {
-    const url = request_code ? `${this.resourceUrl}/${request_code}` : `${this.resourceUrl}`
+  async getAllRequests (control_number) {
+    const url = control_number ? `${this.resourceUrl}/${control_number}` : `${this.resourceUrl}`
     const response = await ApiService.get(url)
     return response
   },
