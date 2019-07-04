@@ -12,20 +12,12 @@
                 </h3>
               </div>
               <div class="kt-portlet__head-toolbar">
-                <div class="btn-group">
-                  <input 
-                    v-model="active_search"
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Type Request Code"
-                  />
-                  <button 
-                    type="button" 
-                    class="btn btn-sm btn-brand pr-2"
-                  >
-                    <i class="la la-search"></i>
-                  </button>
-                </div>
+                <input 
+                  v-model="active_search"
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Type Control Number"
+                />
               </div>
             </div>
             <div class="kt-form">
@@ -35,7 +27,7 @@
                     <thead>
                       <tr>
                         <th class="text-center"><i class="fa fa-hashtag"></i></th>
-                        <th class="text-center" width="150">Request Code</th>
+                        <th class="text-center" width="150">Control Number</th>
                         <th class="text-center">Date Created</th>
                         <th>Justification</th>
                         <th class="text-center" width="50"></th>
@@ -52,14 +44,13 @@
                       </tr>
                       <tr v-for="(item, index) in getEmployeeRequests" :key="index">
                         <td class="text-center">{{ index+1}}</td>
-                        <td class="text-center">{{ item.request_code }}</td>
+                        <td class="text-center">{{ padd(item.id) }}</td>
                         <td class="text-center">{{ item.created_at | toDateString }}</td>
                         <td>{{ item.justification }}</td>
                         <td nowrap>
                           <button 
-                            type="button" 
                             class="btn btn-sm btn-warning btn-icon"
-                            @click="openRequest(item.request_code)"
+                            @click="openRequest(item.id)"
                           >
                             <i class="fa fa-folder-open text-white"></i>
                           </button>
@@ -83,6 +74,7 @@ import { mapGetters } from 'vuex'
 import SubHeader from '../layouts/SubHeader'
 import RequestFormModal from '../components/RequestFormModal'
 import UiLoader from '../plugins/UiLoader'
+import { output } from '../helpers/control-number'
 
 export default {
   name: 'RequestForms',
@@ -114,17 +106,24 @@ export default {
     this.$store.dispatch('requestForm/setApproversAction', this.$store.getters['login/userDetails'].employee_id)
   },
   methods: {
-    fetchEmployeeRequests () {
-      this.$store.dispatch('requestForm/setDefaultItemsAction', {employee_id: this.employeeId})
+    fetchEmployeeRequests (control_number) {
+      this.$store.dispatch('requestForm/setDefaultItemsAction', {
+        employee_id: this.employeeId,
+        id: control_number
+      })
     },
 
-    async openRequest (request_code) {
+    async openRequest (id) {
       const data = {
-        request_code: request_code, requests: this.getEmployeeRequests
+        id: id, requests: this.getEmployeeRequests
       }
       const request = await this.$store.dispatch('requestForm/setRequestbyCodeAction', data)
 
       if (request) this.$store.dispatch('requestForm/setModalStateAction', true)
+    },
+
+    padd (value) {
+      return output(value)
     }
   }
 }

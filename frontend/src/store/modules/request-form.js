@@ -50,13 +50,13 @@ const requestForm = {
         commit('SET_LOADER', true)
       }
 
-      const result = await EmployeeRequestService.getAllEmployeeRequests(payload.employee_id)
+      const result = await EmployeeRequestService.getAllEmployeeRequests(payload.employee_id, payload.id)
       commit('SET_DEFAULT_ITEMS', {items: result})
       commit('SET_LOADER', false)
     },
 
     async setRequestbyCodeAction ({commit}, payload) {
-      const request = await payload.requests.find(item => item.request_code === payload.request_code)
+      const request = await payload.requests.find(item => item.id === payload.id)
       commit('SET_REQUEST_FORM', request)
 
       return true

@@ -31,7 +31,7 @@
             <div class="kt-form">
               <div class="kt-portlet__body">
                 <notifications 
-                  group="foo" 
+                  group="success_notif" 
                   position="bottom right" 
                 />
                 <div 
@@ -183,17 +183,17 @@ export default {
       if (request) {
         this.$store.dispatch('request/setDefaultItemsAction', this.employeeId)
 
-        window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`, '_blank');
+        // window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?formData=${JSON.stringify(this.paramEnricher())}`, '_blank');
 
-        window.focus()
+        // window.focus()
         
         this.$notify({
-          group: 'foo',
+          group: 'success_notif',
           type: 'success',
           title: 'System Alert',
-          text: 'Your request has been successfully submitted! \n Get you request form.',
+          text: 'Success! You may now print your request form. Just navigate to <strong>"Go to your requests"</strong> on the upper navigation',
           speed: 1000,
-          duration: 5000
+          duration: 15000
         })
       }
     },

@@ -9,10 +9,8 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('requests/{request_code?}', 'RequestController@get_requests');
     Route::post('requests', 'RequestController@send_request');
     Route::get('employee-requests/{employee_id}', 'RequestController@getRequestsByEmployeeId');
-
+    Route::get('employee-requests/{employee_id}/{id}', 'RequestController@getRequestsByEmployeeIdandId');
     Route::get('items', 'ItemController@get_items');
-
-    // 
     Route::get('approvers/{employee_id}', 'ApproversController@get_approvers');
 });
 
