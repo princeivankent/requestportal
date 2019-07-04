@@ -53,21 +53,14 @@ router.beforeEach((to, from, next) => {
 
   if (forVisitors) {
     if (loggedIn) {
-      if (getUrlParams()) {
-        console.log('user has been relogged in')
-        TokenService.removeToken()
-        next({ path: '/login', params: { emp_no: getUrlParams.emp_no, password: getUrlParams.password }})
-      }
-      else {
-        next()
-      }
+      next()
     }
     else next()
   }
   else if (requiresAuth) {
     if (!loggedIn) {
-      window.location = `http://${window.location.hostname}/ipc_central`
-      next();
+      localStorage.clear();
+      next('/login');
     }
     else next()
   }

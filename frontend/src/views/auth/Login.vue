@@ -10,63 +10,55 @@
     <div class="container-fluid mt-5">
       <div class="row justify-content-md-center">
         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3 col-xl-3">
-          <template v-if="loginUsingIPC">
+          <!-- <template v-if="loginUsingIPC">
             <div class="alert alert-success" role="alert">
               <div class="alert-text">
                 <i class="fa fa-sync fa-spin"></i>&nbsp;
                 Please wait while <strong>authenticating...</strong>
               </div>
             </div>
-          </template>
-          <template v-else>
-            <h3 class="text-center mb-4">Login</h3>
-            <div class="alert alert-warning" role="alert">
-              <div class="alert-text">
-                <i class="fa fa-exclamation-circle"></i>&nbsp;
-                Something went wrong<br>
-                Please use manual login. Thank you!
+          </template> -->
+          <h3 class="text-center mb-4">Login</h3>
+          <form @submit.prevent="login" novalidate>
+            <div class="form-group">
+              <label>Employee Number</label>
+              <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Employee Number" 
+              v-model="form.employee_number"
+              autofocus
+              >
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input 
+              type="password" 
+              class="form-control" 
+              placeholder="Password" 
+              v-model="form.password"
+              >
+            </div>
+            
+            <!-- Auth Errors -->
+            <div class="form-group">
+              <div v-if="authenticationError" class="alert alert-danger">
+                {{ authenticationError }}
               </div>
             </div>
-            <form @submit.prevent="manualLogin" novalidate>
-              <div class="form-group">
-                <label>Employee Number</label>
-                <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Employee Number" 
-                v-model="form.employee_number"
-                autofocus
-                >
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input 
-                type="password" 
-                class="form-control" 
-                placeholder="Password" 
-                v-model="form.password"
-                >
-              </div>
-              
-              <!-- Auth Errors -->
-              <div class="form-group">
-                <div v-if="authenticationError" class="alert alert-danger">
-                  {{ authenticationError }}
-                </div>
-              </div>
 
-              <!-- Session Error -->
-              <div class="form-group">
-                <div v-if="$store.state.login.isSessionExpires" class="alert alert-danger">
-                  Your Session has been Expired. <br> Please re-login your account.
-                </div>
+            <!-- Session Error -->
+            <div class="form-group">
+              <div v-if="$store.state.login.isSessionExpires" class="alert alert-danger">
+                Your Session has been Expired. <br> Please re-login your account.
               </div>
+            </div>
 
-              <div class="form-group">
-                <button class="btn btn-success btn-block">Submit</button>
-              </div>
-            </form>
-          </template>
+            <div class="form-group">
+              <button v-if="this.authenticating" class="btn btn-success btn-block" disabled="true"><i class="fa fa-sync fa-spin"></i></button>
+              <button v-else class="btn btn-success btn-block">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -77,11 +69,13 @@
 import { mapState } from 'vuex'
 import AuthNavigation from './AuthNavigation'
 import UiLoader from '@/components/loaders/UiLoader'
-import { TokenService } from '../../services/storage.service'
 
 export default {
   name: 'login',
-  components: {AuthNavigation,UiLoader},
+  components: { 
+    AuthNavigation,
+    UiLoader
+  },
   data() {
     return {
       form: {
@@ -91,7 +85,10 @@ export default {
       loginUsingIPC: true
     }
   },
-  computed: mapState('login', ['authenticationError']),
+  computed: mapState('login', [
+    'authenticationError',
+    'authenticating'
+  ]),
   mounted () {
     this.initializedLogin()
   },
@@ -103,41 +100,32 @@ export default {
       })
     },
 
-    manualLogin () {
+    login () {
       this.$store.dispatch('login/login', {
         employee_number: this.form.employee_number, 
         password: this.form.password
       })
     },
 
-    /**
-     * -------------------------
-     * Auto Login User
-     * -------------------------
-     * 
-     * Should direct on URL 
-     * http://${domain}/ipc_rushform/login?emp_no=${employee_number}&password=${password}
-     * from IPC Centralized Portal
-     */
     initializedLogin () {
       const { emp_no, password } = this.getUrlParams()
 
-      if (!emp_no && !password) {
-        window.location = `http://${window.location.hostname}/ipc_central`
-      }
-      else {
-        this.loginUsingIPC = true
-        this.autoLogin(emp_no,password)
+      if (emp_no && password) {
+        this.form = {
+          employee_number: emp_no,
+          password: password
+        }
+
+        this.login();
       }
     },
 
-    // Get Current url parameters
     getUrlParams () {
       const urlParams = new URLSearchParams(window.location.search);
       const emp_no = urlParams.get('emp_no');
       const password = urlParams.get('password');
 
-      return {emp_no,password}
+      return { emp_no, password }
     }
   }
 }
