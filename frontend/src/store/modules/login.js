@@ -90,16 +90,10 @@ const login = {
     },
 
     async logoutAction({ commit }) {
-      const hostname = window.location.hostname
       await UserService.logout()
       commit('logoutSuccess')
 
-      if (hostname == 'ecommerce5' || hostname == 'portal.isuzuphil.com') {
-        window.location = `http://${hostname}/ipc_central`
-      }
-      else {
-        router.push('login')
-      }
+      window.location = `${window.location.protocol}//${window.location.hostname}/ipc_central`;
     },
 
     unAuthorized ({ commit }, message) {
