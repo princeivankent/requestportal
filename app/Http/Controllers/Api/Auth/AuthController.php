@@ -2,64 +2,65 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Services\Jwt;
 use App\Models\ApiToken;
 use App\Models\Employee;
-use App\Services\Jwt;
 use App\Services\UserRole;
-use Carbon\Carbon;
-use App\Helpers\Password;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    protected $password;
-
-    public function __construct(Password $password)
+    public function login(Request $request, UserRole $user_role)
     {
-        $this->password = $password;    
-    }
+        $employee_number = $request->employee_number;
+        $password = $request->password;
+        $user = [];
 
-    public function login(
-        Request $request, 
-        Jwt $jwt, 
-        Employee $employee,
-        UserRole $user_role
-    )
-    {
-        if (!$request->employee_number || !$request->password) {
-            return response()->json([
-                'message' => 'Please complete the required fields!'
-            ], 422);
+        if (!$employee_number || !$password )
+            return response()->json(['message' => 'Please complete the required fields!'], 422);
+
+        // Perform like a monster here...
+        if (Hash::needsRehash($password)) {
+            $user = Employee::getUserUsingEmployeeNumberAndPassword($employee_number, $password);
+        } else {
+            $user = Employee::getUserUsingEmployeeNumber($employee_number);
+            if (!Hash::check($user->password, $password)) $user = '';
         }
 
-        // $query = $employee->get_user($request->employee_number, $this->password->decrypt($request->password));
-        $query = $employee->get_user($request->employee_number, $request->password);
+        if (!$user) 
+            return response()->json([
+                'message' => 'Your credentials are incorrect!'
+            ], 401);
 
-        if (!$query) 
+        if (!$user) 
             return response()->json([
                 'message' => 'Your credentials are incorrect!'
             ], 401);
 
         // Make strings standardized
-        $query->name = ucwords(strtolower($query->name));
-        $query->position_title = ucwords(strtolower($query->position_title));
-        $query->department = ucwords(strtolower($query->department));
-        $query->division = ucwords(strtolower($query->division));
-        $query->section = ucwords(strtolower($query->section));
+        $user->name = ucwords(strtolower($user->name));
+        $user->position_title = ucwords(strtolower($user->position_title));
+        $user->department = ucwords(strtolower($user->department));
+        $user->division = ucwords(strtolower($user->division));
+        $user->section = ucwords(strtolower($user->section));
+        
+        $role = $user_role->role($user->user_type_id);
 
         // Create token for the user
         $token = ApiToken::create([
-            'employee_id' => $query->id,
-            'token'       => $jwt->encrypt([
-                'role'           => $user_role->role($query->user_type_id),
-                'employee_id'    => $query->id,
-                'employee_no'    => $query->employee_no,
-                'name'           => $query->name,
-                'position_title' => $query->position_title,
-                'department'     => $query->department,
-                'division'       => $query->division,
-                'section'        => $query->section,
+            'employee_id' => $user->id,
+            'token'       => Jwt::encode([
+                'role'           => $role,
+                'employee_id'    => $user->id,
+                'employee_no'    => $user->employee_no,
+                'name'           => $user->name,
+                'position_title' => $user->position_title,
+                'department'     => $user->department,
+                'division'       => $user->division,
+                'section'        => $user->section,
                 'created_at'     => Carbon::now()->toDateTimeString()
             ]),
             'revoked'    => 0,
@@ -67,7 +68,6 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            // 'user'         => $query,
             'access_token' => $token->token,
             'expires_at'   => Carbon::parse($token->expires_at)->toDateTimeString()
         ]);

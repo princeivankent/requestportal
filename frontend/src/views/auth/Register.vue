@@ -65,7 +65,7 @@ export default {
   computed: mapState('register', ['registrationError']),
   methods: {
     register () {
-      this.$store.dispatch('register/register', {
+      this.$store.dispatch('register/registerAction', {
         name: this.name, 
         username: this.username, 
         password: this.password

@@ -12,8 +12,8 @@ class RequestError extends Error {
 const RequestService = {
   resourceUrl: `/api/requests`,
 
-  async getAllRequests (control_number) {
-    const url = control_number ? `${this.resourceUrl}/${control_number}` : `${this.resourceUrl}`
+  async getAllRequests (id) {
+    const url = id ? `${this.resourceUrl}/${id}` : `${this.resourceUrl}`
     const response = await ApiService.get(url)
     return response
   },
