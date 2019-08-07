@@ -68,7 +68,7 @@ const login = {
   },
 
   actions: {
-    async login({ commit }, payload) {
+    async loginAction({ commit }, payload) {
       commit('loginRequest')
 
       try {
@@ -89,7 +89,7 @@ const login = {
       }
     },
 
-    async logout({ commit }) {
+    async logoutAction({ commit }) {
       const hostname = window.location.hostname
       await UserService.logout()
       commit('logoutSuccess')

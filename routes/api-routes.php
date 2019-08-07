@@ -13,7 +13,5 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('approvers/{employee_id}', 'ApproversController@get_approvers');
 });
 
-// 
+// Non-rest
 Route::get('generate-pdf', 'PDFController@generate');
-Route::post('encrypt-password', 'PasswordController@encrypt');
-Route::post('decrypt-password', 'PasswordController@decrypt');

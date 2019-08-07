@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { TokenService } from './services/storage.service'
-import { getUrlParams } from './helpers/url-params.service'
+import { TokenService } from '../services/storage.service'
+import { checkAuthParams } from './middlewares/auth-middleware'
 
-const Main     = () => import(/* webpackChunkName: "main" */ './layouts/Main')
-const Login    = () => import(/* webpackChunkName: "login" */ './views/auth/Login')
-const Register = () => import(/* webpackChunkName: "register" */ './views/auth/Register')
+const Main     = () => import(/* webpackChunkName: "main" */ '../layouts/Main')
+const Login    = () => import(/* webpackChunkName: "login" */ '../views/auth/Login')
+const Register = () => import(/* webpackChunkName: "register" */ '../views/auth/Register')
 
-const Home = () => import(/* webpackChunkName: "home" */ './views/Home')
-const RequestForms = () => import(/* webpackChunkName: "request" */ './views/RequestForms')
+const Home = () => import(/* webpackChunkName: "home" */ '../views/Home')
+const RequestForms = () => import(/* webpackChunkName: "request" */ '../views/RequestForms')
 
 Vue.use(VueRouter)
 
@@ -49,21 +49,25 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const forVisitors = to.matched.some(record => record.meta.forVisitors)
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const loggedIn = !!TokenService.getToken()
+  const isLoggedIn = !!TokenService.getToken()
 
-  if (forVisitors) {
-    if (loggedIn) {
+  if(requiresAuth) {
+    if (!isLoggedIn) {
+      next('/login')
+    }
+    else {
       next()
     }
-    else next()
-  }
-  else if (requiresAuth) {
-    if (!loggedIn) {
-      localStorage.clear();
-      next('/login');
+  } 
+  else if (forVisitors) {
+    if (!isLoggedIn) {
+      checkAuthParams(to.query, next)
     }
-    else next()
+    else {
+      next()
+    }
   }
+  else next()
 })
 
 export default router

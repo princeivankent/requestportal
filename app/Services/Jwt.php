@@ -2,39 +2,24 @@
 
 namespace App\Services;
 
+use Firebase\JWT\JWT as Token;
+
 class Jwt
 {
+    private static $signature = 'Prince';
+    private static $algorithm = 'HS256';
+    public static function encode($payload) { return Token::encode($payload, self::$signature); }
+    public static function decode($jwt) { return Token::decode($jwt, self::$signature, [self::$algorithm]); }
+
     /**
-     * -------------------------------------
-     * JWT Encryption using HS256 algorithm
-     * -------------------------------------
-     * 
-     * @param array $payload
-     * @return string $jwt
+     * -----------------------------------
+     * Get User details from Encoded JWT
+     * -----------------------------------
+     * @param string $request
+     * @return object User Data
      */
-    public function encrypt($payload)
+    public static function user($request)
     {
-        // Create token header as a JSON string
-        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-
-        // Create token payload as a JSON string
-        $payload = json_encode($payload);
-
-        // Encode Header to Base64Url String
-        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-
-        // Encode Payload to Base64Url String
-        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-
-        // Create Signature Hash
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'abC123!', true);
-
-        // Encode Signature to Base64Url String
-        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-
-        // Create JWT
-        $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
-
-        return $jwt;
+        return self::decode(str_replace('Bearer ', '', implode(' ', [$request->header('Authorization')])));
     }
 }

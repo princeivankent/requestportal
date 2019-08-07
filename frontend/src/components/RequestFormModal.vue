@@ -128,7 +128,6 @@ export default {
   methods: {
     pdfGenerator () {
       window.open(`http://${window.location.hostname}/${process.env.VUE_APP_NAME}/api/generate-pdf?control_number=${this.getRequestForm.id}`, '_blank');
-      window.focus()
     }
   }
 }

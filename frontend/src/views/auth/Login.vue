@@ -10,22 +10,7 @@
     <div class="container-fluid mt-5">
       <div class="row justify-content-md-center">
         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-3 col-xl-3">
-          <!-- <template v-if="loginUsingIPC">
-            <div class="alert alert-success" role="alert">
-              <div class="alert-text">
-                <i class="fa fa-sync fa-spin"></i>&nbsp;
-                Please wait while <strong>authenticating...</strong>
-              </div>
-            </div>
-          </template> -->
           <h3 class="text-center mb-4">Login</h3>
-          <div class="alert alert-secondary" role="alert">
-            <div class="alert-text">
-              <i class="fa fa-exclamation-circle"></i>&nbsp;
-              Automatic login has been disabled.
-              Please login your account manually. Thank you
-            </div>
-          </div>
           <form @submit.prevent="login" novalidate>
             <div class="form-group">
               <label>Employee Number</label>
@@ -96,19 +81,16 @@ export default {
     'authenticationError',
     'authenticating'
   ]),
-  mounted () {
-    this.initializedLogin()
-  },
   methods: {
     autoLogin (emp_no, password) {
-      this.$store.dispatch('login/login', {
+      this.$store.dispatch('login/loginAction', {
         employee_number: emp_no, 
         password: password
       })
     },
 
     login () {
-      this.$store.dispatch('login/login', {
+      this.$store.dispatch('login/loginAction', {
         employee_number: this.form.employee_number, 
         password: this.form.password
       })

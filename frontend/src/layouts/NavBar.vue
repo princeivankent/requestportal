@@ -848,7 +848,7 @@ export default {
   methods: {
     logout () {
       if (confirm('Are you sure to logout?'))
-        this.$store.dispatch('login/logout')
+        this.$store.dispatch('login/logoutAction')
     }
   }
 }

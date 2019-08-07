@@ -65,7 +65,7 @@ const ApiService = {
       (response) => response,
       async (error) => {
         if (error.request.status === 401) {
-          store.dispatch('login/logout')
+          store.dispatch('login/logoutAction')
           throw error
         }
 
