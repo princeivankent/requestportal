@@ -16,7 +16,6 @@ class ItemController extends Controller
 
         $items = [
             'id'              => '',
-            'request_code'    => '',
             'created_by'      => '',
             'approver_id'     => '',
             'justification'   => '',

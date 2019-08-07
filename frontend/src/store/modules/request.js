@@ -118,10 +118,10 @@ const request = {
       return commit('SET_CREATED_BY', id)
     },
 
-    async getItems ({commit}, control_number) {
-      if (control_number) {
+    async getItems ({commit}, id) {
+      if (id) {
         await commit('SET_LOADER', true)
-        const {data} = await RequestService.getAllRequests(control_number)
+        const {data} = await RequestService.getAllRequests(id)
         await commit('SET_LOADER', false)
         return commit('STORE_ITEMS', data)
       }

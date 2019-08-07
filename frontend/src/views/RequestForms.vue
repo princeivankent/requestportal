@@ -106,10 +106,10 @@ export default {
     this.$store.dispatch('requestForm/setApproversAction', this.$store.getters['login/userDetails'].employee_id)
   },
   methods: {
-    fetchEmployeeRequests (control_number) {
+    fetchEmployeeRequests (id) {
       this.$store.dispatch('requestForm/setDefaultItemsAction', {
         employee_id: this.employeeId,
-        control_number: control_number
+        id: id
       })
     },
 

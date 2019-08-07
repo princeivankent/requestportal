@@ -12,12 +12,12 @@ use Validator;
 
 class RequestController extends Controller
 {
-    public function get_requests($control_number = null)
+    public function get_requests($id = null)
     {
         $query = RequestModel::with('requested_items.item.item_approver_type');
 
-        if ($control_number) {
-            $query_id = $query->whereId($control_number)->first();
+        if ($id) {
+            $query_id = $query->whereId($id)->first();
 
             return response()->json($query_id);
         }
@@ -25,12 +25,12 @@ class RequestController extends Controller
         return response()->json($query->get());
     }
 
-    public function getRequestsByEmployeeId($employee_id, $control_number = null)
+    public function getRequestsByEmployeeId($employee_id, $id = null)
     {
         $query = RequestModel::with('requested_items.item.item_approver_type');
 
-        if ($control_number)
-            $sub_query = $query->where(['id' => $control_number, 'created_by' => $employee_id]);
+        if ($id)
+            $sub_query = $query->where(['id' => $id, 'created_by' => $employee_id]);
         else
             $sub_query = $query->whereCreatedBy($employee_id)->orderBy('created_at', 'desc');
             
@@ -58,7 +58,6 @@ class RequestController extends Controller
 
             // Save requests table
             $query1 = RequestModel::create([
-                'request_code' => $code_generator->generate(),
                 'created_by' => $request->created_by,
                 'approver_id' => $request->approver_id, // Check if requestor is lower than the approver
                 'justification' => $request->justification,
